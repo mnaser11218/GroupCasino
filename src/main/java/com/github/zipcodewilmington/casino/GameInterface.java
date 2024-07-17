@@ -21,9 +21,9 @@ public interface GameInterface extends Runnable {
      */
     void run();
 
-    void newPlayerTurn();
+//    void newPlayerTurn();
 
-    void endGame();
+//    void endGame();
 
 
 
