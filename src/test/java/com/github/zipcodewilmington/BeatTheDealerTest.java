@@ -16,20 +16,20 @@ public class BeatTheDealerTest {
         beatDealer = new BeatTheDealer();
     }
 
-//    @Test
-//    public void calculateWinnerTest(){
-//        player.playerDiceValue = 10;
-//        int dealerDiceValue = 8;
-//        BeatTheDealerPlayer actual = beatDealer.calculateWinner(player.playerDiceValue, dealerDiceValue);
-//
-//        Assert.assertTrue(actual);
-//    }
-//
-//    @Test
-//    public void checkIf12HitsTest(){
-//        int dealerDiceValue = 12;
-//        Assert.assertTrue(beatDealer.checkIf12Hits(dealerDiceValue));
-//    }
+    @Test
+    public void calculateWinnerTest(){
+        player.playerDiceValue = 10;
+        int dealerDiceValue = 8;
+        BeatTheDealerPlayer expected = player;
+
+//        Assert.assertEquals(player, beatDealer.calculateWinner(player.playerDiceValue, dealerDiceValue));
+    }
+
+    @Test
+    public void checkIf12HitsTest(){
+        int dealerDiceValue = 12;
+        Assert.assertTrue(beatDealer.checkIf12Hits(dealerDiceValue));
+    }
 
 
 
