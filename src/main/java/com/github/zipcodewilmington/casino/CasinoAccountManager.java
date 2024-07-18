@@ -37,7 +37,7 @@ public class CasinoAccountManager {
                 casinoAccounter = casinoAccount;
             }
         }
-        System.out.println("returning account " + casinoAccounter.getAccountName());
+        System.out.println("Welcome " + casinoAccounter.getAccountName());
         return casinoAccounter;
     }
 

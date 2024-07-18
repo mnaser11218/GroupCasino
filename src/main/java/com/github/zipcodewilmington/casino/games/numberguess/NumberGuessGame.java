@@ -78,14 +78,14 @@ public class NumberGuessGame implements GameInterface {
 
 
         Scanner scanner = new Scanner(System.in);
-//        System.out.println("Select a target");
-//        generateRandomNumber();
-//        while(!appClosed){
-//            System.out.println("Please enter a number");
-//           userNumber = scanner.nextInt();
-//            System.out.println("you entered the number " + userNumber);
-//            checkIfNumberTooHighOrTooLow();
-//        }
+        System.out.println("Select a number between 0 to 100");
+        generateRandomNumber();
+        while(!appClosed){
+            System.out.println("Please enter a number");
+           userNumber = scanner.nextInt();
+           // System.out.println("you entered the number " + userNumber);
+            checkIfNumberTooHighOrTooLow();
+        }
 
     }
 
@@ -99,11 +99,11 @@ public class NumberGuessGame implements GameInterface {
         this.player = null;
     }
 
-    public static void main(String[] args) {
-        NumberGuessGame numberGuessGame = new NumberGuessGame();
-        numberGuessGame.run();
-
-    }
+//    public static void main(String[] args) {
+//        NumberGuessGame numberGuessGame = new NumberGuessGame();
+//        numberGuessGame.run();
+//
+//    }
 
 
 }
