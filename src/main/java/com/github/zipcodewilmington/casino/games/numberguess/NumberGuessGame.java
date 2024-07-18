@@ -15,7 +15,8 @@ public class NumberGuessGame implements GameInterface {
     private int randomNumber=0;
     private ArrayList<Integer> userInputs = new ArrayList<>();
     private boolean appClosed = false;
-    private PlayerInterface player;
+    private NumberGuessPlayer player;
+
 
     public NumberGuessGame() {
     }
@@ -53,6 +54,7 @@ public class NumberGuessGame implements GameInterface {
     }
 
     public boolean checkIfNumberTooHighOrTooLow(){
+        Scanner scanner = new Scanner(System.in);
        this.userInputs.add(this.userNumber);
         if(this.userNumber > randomNumber){
             System.out.println("My Number is less than " + this.userNumber);
@@ -63,8 +65,13 @@ public class NumberGuessGame implements GameInterface {
         }
             System.out.println("Well Done ! It took you " + userInputs.size() + " amount of tries");
         System.out.println("Would you like to play again? yes/no");
+        String userInput = scanner.nextLine();
+        if(userInput.equalsIgnoreCase("no")){
             this.appClosed = true;
             return true;
+        }
+        userInputs.clear();
+        return true;
     }
 
     public int generateRandomNumber(){
@@ -72,11 +79,16 @@ public class NumberGuessGame implements GameInterface {
         this.randomNumber = r;
         return r;
     }
+    public void add(PlayerInterface player){
+        //this.player = (NumberGuessPlayer)player;
+        this.player = (NumberGuessPlayer) player;
+    }
 
     public void run(){
        // PlayerInterface playerInterface = player;
-
-
+        //player.helloWorld();
+        //this.player.getArcadeAccount();
+       // System.out.println(this.player.getAccountName());
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select a number between 0 to 100");
         generateRandomNumber();
@@ -89,10 +101,7 @@ public class NumberGuessGame implements GameInterface {
 
     }
 
-    public void add(PlayerInterface player){
-        this.player = player;
 
-    }
 
     @Override
     public void remove(PlayerInterface player) {
