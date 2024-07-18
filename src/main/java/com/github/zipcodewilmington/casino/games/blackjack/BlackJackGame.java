@@ -18,8 +18,6 @@ public class BlackJackGame implements GamblingGameInterface {
     static int totalOfPlayerHand = 0;
     static int totalOfDealerHand = 0;
 
-
-
     public static void initializeHands(){
         System.out.println("\nDealer Hand:");
         dealerHand.add(deck.dealACard());
@@ -50,6 +48,54 @@ public class BlackJackGame implements GamblingGameInterface {
         }
         System.out.println("Your hand total: " + totalOfDealerHand);
 
+    }
+
+    public static void playAgain(){
+        displayBeginning();
+        resetGame();
+        initializeHands();
+        playerTurn();
+    }
+
+    public static void resetGame(){
+        playerHand = new ArrayList<>();
+        dealerHand = new ArrayList<>();
+        totalOfPlayerHand = 0;
+        totalOfDealerHand = 0;
+        turnIsRunning = true;
+        deck = new CardDeck();
+    }
+
+    public static void findTheWinner(){
+        int dealerResult = 21 - totalOfDealerHand;
+        int playerResult = 21 - totalOfPlayerHand;
+
+        if (playerResult == 0) {
+            System.out.println("YOU HAVE BLACKJACK!!!!!!!!!");
+            return; // End the method if player has blackjack
+        } else if (dealerResult == 0) {
+            System.out.println("DEALER HAS BLACKJACK! YOU LOST!!!");
+            return; // End the method if dealer has blackjack
+        }
+
+        if (totalOfPlayerHand > 21) {
+            System.out.println("The dealer wins... YOU LOSE.");
+            return; // End the method if player busts
+        } else if (totalOfDealerHand > 21) {
+            System.out.println("You win the pot!!! Money, baby!");
+            return; // End the method if dealer busts
+        }
+
+        if (playerResult == dealerResult) {
+            System.out.println("It's a push.");
+            return; // End the method if it's a tie
+        }
+
+        if (dealerResult < playerResult) {
+            System.out.println("The dealer wins... YOU LOSE.");
+        } else if (playerResult < dealerResult) {
+            System.out.println("You win the pot!!! Money, baby!");
+        }
     }
 
     @Override
@@ -85,7 +131,11 @@ public class BlackJackGame implements GamblingGameInterface {
         //check dealer
         //confirm next new round or quit
         //end loop
+    }
 
+    public static void dealersTurn(){
+        //if dealerTotal is <= 16, you must hit.
+        //if 17 or more, you must stand.
     }
 
 
@@ -106,9 +156,7 @@ public class BlackJackGame implements GamblingGameInterface {
                 turnIsRunning = false;
                 break;
             }
-            System.out.println("\nWould you like to hit or stand?");
-            System.out.println("Press 1): to Hit");
-            System.out.println("Press 2): to Stand");
+            System.out.println("\nWould you like to hit or stand?\nPress 1): to Hit\nPress 2): to Stand");
             int userInput = scanner.nextInt();
             if (userInput == 1) {
                 playerHand.add(deck.dealACard());
@@ -119,6 +167,18 @@ public class BlackJackGame implements GamblingGameInterface {
             } else {
                 System.out.println("Not an option.");
             }
+        }
+
+        findTheWinner();
+
+        System.out.println("\nPlay another hand?\nPress 1): Yes\nPress 2): No");
+        int userInput2 = scanner.nextInt();
+        if (userInput2 == 1){
+            playAgain();
+        } else if (userInput2 == 2) {
+            System.out.println("Goodbye.");
+        } else {
+            System.out.println("Not an option.");
         }
 
     }
@@ -137,9 +197,7 @@ public class BlackJackGame implements GamblingGameInterface {
 
 
     public static void main(String[] args) {
-        displayBeginning();
-        initializeHands();
-        playerTurn();
+        playAgain();
     }
 
 
