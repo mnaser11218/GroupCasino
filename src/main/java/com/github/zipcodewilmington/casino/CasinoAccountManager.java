@@ -37,7 +37,6 @@ public class CasinoAccountManager {
                 casinoAccounter = casinoAccount;
             }
         }
-        System.out.println("Welcome " + casinoAccounter.getAccountName());
         return casinoAccounter;
     }
 
@@ -65,7 +64,10 @@ public class CasinoAccountManager {
         String currentMethodName = new Object(){}.getClass().getEnclosingMethod().getName();
         String currentClassName = getClass().getName();
         arcadeAccountList.add(casinoAccount);
-        System.out.println("account list " + casinoAccount.getArcadeAccountList());
+        for(CasinoAccount account : this.arcadeAccountList){
+            System.out.println("account name: " + account.getAccountName());
+        }
+        //System.out.println("account list " +  casinoAccount.getArcadeAccountList());
         String errorMessage = "Method with name [ %s ], defined in class with name [ %s ] has  not yet been implemented";
         //throw new RuntimeException(String.format(errorMessage, currentMethodName, currentClassName));
     }

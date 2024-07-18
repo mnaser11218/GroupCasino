@@ -9,12 +9,27 @@ public class CasinoAccount extends CasinoAccountManager {
     private String accountName;
     private String password;
     private int accountBalance;
+//    private CasinoAccount account;
+//
+//
+//
+//
+//    public CasinoAccount getAccount() {
+//        return account;
+//    }
+//
+//    public void setAccount(CasinoAccount account) {
+//        this.account = account;
+//    }
+
 
    // CasinoAccount casinoAccount = this.getAccount("mohammed", "mohammed");
 
 
     public CasinoAccount() {
     }
+
+
 
     public CasinoAccount(String accountName, String password) {
         this.accountName = accountName;
