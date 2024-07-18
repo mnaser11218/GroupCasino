@@ -1,27 +1,31 @@
 package com.github.zipcodewilmington.casino.games.numberguess;
 
+import com.github.zipcodewilmington.casino.GameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by leon on 7/21/2020.
  */
-public class NumberGuessGame {
+public class NumberGuessGame implements GameInterface {
 
-    private int userInput =0;
+    private int userNumber =0;
     private int randomNumber=0;
     private ArrayList<Integer> userInputs = new ArrayList<>();
     private boolean appClosed = false;
+    private PlayerInterface player;
 
     public NumberGuessGame() {
     }
 
-    public int getUserInput() {
-        return userInput;
+    public int getUserNumber() {
+        return userNumber;
     }
 
-    public void setUserInput(int userInput) {
-        this.userInput = userInput;
+    public void setUserNumber(int userNumber) {
+        this.userNumber= userNumber;
     }
 
     public int getRandomNumber() {
@@ -48,33 +52,53 @@ public class NumberGuessGame {
         this.appClosed = appClosed;
     }
 
-    public void checkIfNumberIsTooHighOrTooLow(){
-        if(this.userInput > randomNumber){
-            System.out.println("Your number is too high");
-        } else if(this.userInput < randomNumber){
-            System.out.println("Your number is too low");
-        }else{
-            System.out.println("Congrats! You selected the correct number in " + userInputs.size() + " amount of tries");
+    public boolean checkIfNumberTooHighOrTooLow(){
+       this.userInputs.add(this.userNumber);
+        if(this.userNumber > randomNumber){
+            System.out.println("My Number is less than " + this.userNumber);
+            return false;
+        } else if(this.userNumber < randomNumber){
+            System.out.println("My Number is greater than " + this.userNumber);
+            return false;
         }
-
+            System.out.println("Well Done ! It took you " + userInputs.size() + " amount of tries");
+        System.out.println("Would you like to play again? yes/no");
+            this.appClosed = true;
+            return true;
     }
 
-    public void generateRandomNumber(){
+    public int generateRandomNumber(){
         int r = (int) (Math.random() * (100 - 1)) + 1;
         this.randomNumber = r;
+        return r;
     }
 
     public void run(){
+       // PlayerInterface playerInterface = player;
+
 
         Scanner scanner = new Scanner(System.in);
-        while(!appClosed){
-            System.out.println("Please enter a number");
-           userInput = scanner.nextInt();
-            System.out.println("you entered the number " + userInput);
+//        System.out.println("Select a target");
+//        generateRandomNumber();
+//        while(!appClosed){
+//            System.out.println("Please enter a number");
+//           userNumber = scanner.nextInt();
+//            System.out.println("you entered the number " + userNumber);
+//            checkIfNumberTooHighOrTooLow();
+//        }
 
-        }
-       // System.out.println("hello world");
     }
+
+    public void add(PlayerInterface player){
+        this.player = player;
+
+    }
+
+    @Override
+    public void remove(PlayerInterface player) {
+        this.player = null;
+    }
+
     public static void main(String[] args) {
         NumberGuessGame numberGuessGame = new NumberGuessGame();
         numberGuessGame.run();
