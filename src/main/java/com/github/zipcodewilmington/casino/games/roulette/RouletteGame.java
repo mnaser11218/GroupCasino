@@ -17,26 +17,60 @@ public class RouletteGame implements GamblingGameInterface {
 ////        String userInputUpper = userInput.toUpperCase();
 //    }
 
+    public static void main(String[] args) {
+        System.out.println(
+                "     _____________________________________________________________________\t\n" +
+                "    /|    |    |    |    |    |    |    |    |    |    |    |     |      |  \n" +
+                "   / |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 |  36 | 2to1 |\n" +
+                "  /  |____|____|____|____|____|____|____|____|____|____|____|____ |______|\n" +
+                " /   |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
+                "| 0  |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35  | 2to1 |\n" +
+                " \\   |____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
+                "  \\  |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
+                "   \\ |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 |  34 | 2to1 |\n" +
+                "    \\|____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
+                "     |                   |                   |                    |\n" +
+                "     |      1st 12       |       2nd 12      |      3rd  12       |\n" +
+                "     |___________________|___________________|____________________|\n" +
+                "     |              |              |              |               |\n" +
+                "     |    EVEN      |     RED      |     BLACK    |       ODD     |\n" +
+                "     |______________|______________|______________|_______________|\n" +
+                "        ---------Welcome to Roulette! Place your wager---------");
+        Random rouletteSpin = new Random();
+        RouletteGame roulette = new RouletteGame();
+        int playerBet = roulette.askForWager(0);
+        System.out.println("" + "Which bet type do you feel is luckiest? \n" +
+                "ANY NUMBER || 1ST12 || 2ND12 || 3RD12 || BLACK || RED || ODD || EVEN");
+        String betType = roulette.askForBetType().toUpperCase();
+        roulette.storedSpinResult = rouletteSpin.nextInt(36)+1;
+        int payout =+ roulette.determinePayOutAmount(playerBet,betType);
+        if (payout == 0){
+            System.out.println("the winning number was " + roulette.storedSpinResult + ", lol you lost");
+        } else if (payout > 0){
+            System.out.println("wow you actually got it, the winning number was " + roulette.storedSpinResult);
+        }
+    }
+
     public int determinePayOutAmount(int playerBet, String betType) {
         int multiplier = 0;
         int payout = playerBet;
 
         if (isNumber(betType)) {
-            multiplier = determinePayOutForNumber(betType);
+            multiplier += determinePayOutForNumber(betType);
         } else{
         switch (betType) {
             case "ODD":
             case "EVEN":
-                multiplier = determinePayOutForOddsOrEvens(betType);
+                multiplier += determinePayOutForOddsOrEvens(betType);
                 break;
             case "1ST12":
             case "2ND12":
             case "3RD12":
-                multiplier = determinePayOutFor12s(betType);
+                multiplier += determinePayOutFor12s(betType);
                 break;
             case "BLACK":
             case "RED":
-                multiplier = determinePayOutForColor(betType);
+                multiplier += determinePayOutForColor(betType);
                 break;
             default:
                 break;
@@ -61,17 +95,17 @@ public class RouletteGame implements GamblingGameInterface {
         int[] third12 = new int[]{25,26,27,28,29,30,31,32,33,34,35,36};
 
         for (int element : first12) {
-            if (element == storedSpinResult && betType.equals("1st12")) {
+            if (element == storedSpinResult && betType.equals("1ST12")) {
                 return 2;
             }
         }
         for (int element : second12) {
-            if (element == storedSpinResult && betType.equals("2nd12")) {
+            if (element == storedSpinResult && betType.equals("2ND12")) {
                 return 2;
             }
         }
         for (int element : third12) {
-            if (element == storedSpinResult && betType.equals("3rd12")) {
+            if (element == storedSpinResult && betType.equals("3RD12")) {
                 return 2;
             }
         }
@@ -112,9 +146,17 @@ public class RouletteGame implements GamblingGameInterface {
         return true;
     }
 
+    public String askForBetType() {
+        Scanner scanner = new Scanner(System.in);
+        String betType = scanner.nextLine();
+        return betType;
+    }
+
     @Override
     public int askForWager(int playerBet) {
-        return 0;
+        Scanner scanner = new Scanner(System.in);
+        playerBet = scanner.nextInt();
+        return playerBet;
     }
 
     @Override

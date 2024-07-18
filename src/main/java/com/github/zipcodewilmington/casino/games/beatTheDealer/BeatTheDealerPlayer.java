@@ -1,5 +1,7 @@
 package com.github.zipcodewilmington.casino.games.beatTheDealer;
 
-public class BeatTheDealerPlayer {
+import com.github.zipcodewilmington.casino.Dice;
+
+public class BeatTheDealerPlayer extends Dice {
     public int playerDiceValue;
 }

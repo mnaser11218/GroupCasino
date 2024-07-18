@@ -6,8 +6,17 @@ public class BeatTheDealer extends Dice {
 
     public int dealerDiceValue;
 
-//    public Player calculateWinner(int playerDiceValue, int dealerDiceValue) {
-//    return Player;}
+//    public BeatTheDealerPlayer calculateWinner(int playerDiceValue, int dealerDiceValue) {
+//        if (checkIf12Hits(dealerDiceValue) == true){
+//            return Dealer;
+//        } else if (playerDiceValue > dealerDiceValue){
+//            return Player;
+//        }else if (dealerDiceValue > playerDiceValue){
+//            return Dealer;
+//        }else{
+//        return null;
+//        }
+//    }
 
     public boolean checkIf12Hits(int dealerDiceValue) {
         if (dealerDiceValue == 12) {

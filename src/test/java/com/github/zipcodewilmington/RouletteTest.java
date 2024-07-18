@@ -7,6 +7,8 @@ import org.junit.Test;
 
 public class RouletteTest {
 
+
+
     RouletteGame roulette = new RouletteGame();
 
     @Before
@@ -25,13 +27,24 @@ public class RouletteTest {
 //    }
 
     @Test
-    public final void testDeterminePayoutAmount(){
+    public final void testDeterminePayoutAmount1(){
         roulette.storedSpinResult = 17;
         String betType = "17";
         int playerBet = 500;
 
         int actual = roulette.determinePayOutAmount(playerBet, betType);
         int expected = 17500;
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public final void testDeterminePayoutAmount2(){
+        roulette.storedSpinResult = 10;
+        String betType = "1ST12";
+        int playerBet = 500;
+
+        int actual = roulette.determinePayOutAmount(playerBet, betType);
+        int expected = 1000;
         Assert.assertEquals(expected, actual);
     }
 
