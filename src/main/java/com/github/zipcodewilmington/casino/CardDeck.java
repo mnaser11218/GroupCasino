@@ -14,18 +14,24 @@ public class CardDeck {
     public CardDeck(){
         this.cardDeck = new ArrayList();
         for (int i = 0; i < 13; i++){
-            CardValue value = CardValue.values()[i];
+            int value = CardValue.values()[i].getCardValue();
             for (int j = 0; j < 4; j++){
                 Card card = new Card(value, Suit.values()[j]);
                 this.cardDeck.add(card);
             }
         }
-//        Collections.shuffle(cardDeck);
+        Collections.shuffle(cardDeck);
         Iterator cardIterator = cardDeck.iterator();
         while (cardIterator.hasNext()){
             Card aCard = (Card) cardIterator.next();
-            System.out.println(aCard.getCardValue() + " of " + aCard.getSuit());
+//            System.out.println(aCard.getCardValue() + " of " + aCard.getSuit());
         }
     }
+
+    public Card dealACard(){
+//        Card.displayCardAsString(cardDeck.get(0));
+        return cardDeck.remove(0);
+    }
+
 
 }

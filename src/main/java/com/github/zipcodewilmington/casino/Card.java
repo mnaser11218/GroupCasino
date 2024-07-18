@@ -3,9 +3,9 @@ package com.github.zipcodewilmington.casino;
 public class Card {
 
     private Suit suit;
-    private CardValue cardValue;
+    private int cardValue;
 
-    public Card (CardValue cardValue, Suit suit){
+    public Card (int cardValue, Suit suit){
         this.cardValue = cardValue;
         this.suit = suit;
     }
@@ -18,13 +18,17 @@ public class Card {
         this.suit = suit;
     }
 
-    public CardValue getCardValue(){
+    public int getCardValue(){
         return cardValue;
     }
 
-    public void setCardValue(CardValue cardValue){
+    public void setCardValue(int cardValue){
         this.cardValue = cardValue;
     }
+
+//    public static void displayCardAsString(Card card){
+//        System.out.println(card.getCardValue() + " of " + card.getSuit());
+//    }
 
 
 }
