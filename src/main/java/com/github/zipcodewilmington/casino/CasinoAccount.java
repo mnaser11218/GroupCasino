@@ -5,19 +5,48 @@ package com.github.zipcodewilmington.casino;
  * `ArcadeAccount` is registered for each user of the `Arcade`.
  * The `ArcadeAccount` is used to log into the system to select a `Game` to play.
  */
-public class CasinoAccount {
+public class CasinoAccount extends CasinoAccountManager {
+    private String accountName;
+    private String password;
+    private int accountBalance;
 
-//testing testing 123
-// testing testing 123 second time
+   // CasinoAccount casinoAccount = this.getAccount("mohammed", "mohammed");
 
-//hi guys its me josue
-    //hi guysTEST4DEV -josue
-// i just pushed to dev
-    //dippy made a change!!!
-    // tim made a change
-    // tim made another change
 
-    //LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOL
-    //Corey in the house
+    public CasinoAccount() {
+    }
+
+    public CasinoAccount(String accountName, String password) {
+        this.accountName = accountName;
+        this.password = password;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(int accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public static void main(String[] args) {
+    }
+
 
 }
