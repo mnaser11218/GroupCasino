@@ -1,11 +1,19 @@
 package com.github.zipcodewilmington.casino.games.keno;
 
+import com.github.zipcodewilmington.casino.CasinoAccountManager;
+import com.github.zipcodewilmington.casino.GamblingGameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class KenoGame{
+public class KenoGame implements GamblingGameInterface {
+    public String userName;
+    public String password;
+    public CasinoAccountManager casinoAccountManager;
+    public KenoPlayer player;
 
     // this is going to display a little welcome note in the beginning of the opening for the user
     public void displayWelcomeMessage() {
@@ -141,7 +149,61 @@ public class KenoGame{
     }
 
 
-    public static void main(String[] args) {
+
+
+
+
+    public double[] getPayoutRates() {
+        return new double[] {
+                0,
+                2.5,    // 1 match
+                7,      // 2 matches
+                12,     // 3 matches
+                50,     // 4 matches
+                200,    // 5 matches
+                1500,   // 6 matches
+                5000,   // 7 matches
+                10000,  // 8 matches
+                20000,  // 9 matches
+                30000,  // 10 matches
+        };
+    }
+
+
+    @Override
+    public int askForWager(int playerBet) {
+        return 0;
+    }
+
+    @Override
+    public int adjustBalances(int playerBalance) {
+        return 0;
+    }
+
+    @Override
+    public void add(PlayerInterface player) {
+        this.player = (KenoPlayer)player;
+    }
+
+    @Override
+    public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
+        this.casinoAccountManager = casinoAccountManager;
+    }
+
+    @Override
+    public void addUserNameAndPassword(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+
+    @Override
+    public void remove(PlayerInterface player) {
+
+    }
+
+    @Override
+    public void run() {
+
         KenoGame kenoGame = new KenoGame();
         int userInput = 1;
 
@@ -174,27 +236,8 @@ public class KenoGame{
 
 
         }
+
     }
-
-
-
-
-    public double[] getPayoutRates() {
-        return new double[] {
-                0,
-                2.5,    // 1 match
-                7,      // 2 matches
-                12,     // 3 matches
-                50,     // 4 matches
-                200,    // 5 matches
-                1500,   // 6 matches
-                5000,   // 7 matches
-                10000,  // 8 matches
-                20000,  // 9 matches
-                30000,  // 10 matches
-        };
-    }
-
 }
 
 /* The contains(Object element) of java.util.Collection interface is used to check whether the element ‘element’
