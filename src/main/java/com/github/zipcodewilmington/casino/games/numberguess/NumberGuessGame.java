@@ -31,6 +31,7 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
     }
     public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager){
         this.casinoAccountManager = casinoAccountManager;
+        this.myPlayerAccount = this.casinoAccountManager.getAccount(this.userName, this.password);
     }
     public NumberGuessGame() {
     }
@@ -106,8 +107,9 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
        // System.out.println(this.player.getArcadeAccount());
         //System.out.println(player.getAccount());
 //        System.out.println(this.player.getAccountName());
-       CasinoAccount casino123= this.casinoAccountManager.getAccount(this.userName, this.password);
-        System.out.println("username is: " + casino123.getAccountName() + " password is: " + casino123.getPassword() + " your balance is: "+ casino123.getAccountBalance());
+     // this.myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + 5);
+     //   System.out.println("your balance is :" + myPlayerAccount.getAccountBalance());
+       // System.out.println("username is: " + casino123.getAccountName() + " password is: " + casino123.getPassword() + " your balance is: "+ casino123.getAccountBalance());
 //      CasinoAccount user123 =  this.player.getArcadeAccount(this.userName, this.password);
 //        System.out.println( "your account name is: " + user123.getAccountName());
 
