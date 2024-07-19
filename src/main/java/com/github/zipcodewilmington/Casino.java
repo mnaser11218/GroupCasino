@@ -49,6 +49,8 @@ public class Casino implements Runnable {
                         play(new RouletteGame(), new RoulettePlayer());
                     }else if(gameSelectionInput.equals("BLACKJACK")){
                         play(new BlackJackGame(), new BlackJackPlayer());
+                    }else if (gameSelectionInput.equals("KENO")){
+                            play(new BlackJackGame(), new BlackJackPlayer());
                     }
 
 //                    else if(gameSelectionInput.equals("BEAT THE DEALER")){
