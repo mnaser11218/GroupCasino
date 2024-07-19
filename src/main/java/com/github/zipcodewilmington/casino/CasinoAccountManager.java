@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,10 +35,12 @@ public class CasinoAccountManager {
         CasinoAccount casinoAccounter = null;
         for(CasinoAccount casinoAccount : this.arcadeAccountList){
             if(casinoAccount.getAccountName().equals(accountName) && casinoAccount.getPassword().equals(accountPassword)){
-                casinoAccounter = casinoAccount;
+                System.out.println("we are in the if statement");
+               casinoAccounter = casinoAccount;
+               // casinoAccounter =
             }
         }
-        System.out.println( "inside get account method, the name is: " + casinoAccounter.getAccountName());
+       // System.out.println( "inside get account method, the name is: " + casinoAccounter.getAccountName());
         return casinoAccounter;
     }
 

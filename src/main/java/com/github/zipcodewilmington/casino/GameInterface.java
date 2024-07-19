@@ -10,6 +10,10 @@ public interface GameInterface extends Runnable {
      */
     void add(PlayerInterface player);
 
+    void addCasinoAccountManager(CasinoAccountManager casinoAccountManager);
+
+    void addUserNameAndPassword(String userName, String password);
+
     /**
      * removes a player from the game
      * @param player the player to be removed from the game

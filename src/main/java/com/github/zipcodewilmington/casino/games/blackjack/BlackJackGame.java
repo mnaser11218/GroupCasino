@@ -1,14 +1,11 @@
 package com.github.zipcodewilmington.casino.games.blackjack;
 
-import com.github.zipcodewilmington.casino.Card;
-import com.github.zipcodewilmington.casino.CardDeck;
-import com.github.zipcodewilmington.casino.GamblingGameInterface;
-import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.casino.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class BlackJackGame implements GamblingGameInterface {
+public class BlackJackGame implements  GameInterface {
 
     static Scanner scanner = new Scanner(System.in);
     static CardDeck deck = new CardDeck();
@@ -17,6 +14,8 @@ public class BlackJackGame implements GamblingGameInterface {
     static boolean turnIsRunning = true;
     static int totalOfPlayerHand = 0;
     static int totalOfDealerHand = 0;
+
+
 
     public static void initializeHands(){
         System.out.println("\nDealer Hand:");
@@ -98,20 +97,31 @@ public class BlackJackGame implements GamblingGameInterface {
         }
     }
 
-    @Override
-    public int askForWager(int playerBet) {
-        return 0;
-    }
-
-    @Override
-    public int adjustBalances(int playerBalance) {
-        return 0;
-    }
+//    @Override
+//    public int askForWager(int playerBet) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int adjustBalances(int playerBalance) {
+//        return 0;
+//    }
 
     @Override
     public void add(PlayerInterface player) {
 
     }
+
+    @Override
+    public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
+
+    }
+
+    @Override
+    public void addUserNameAndPassword(String userName, String password) {
+
+    }
+
 
     @Override
     public void remove(PlayerInterface player) {

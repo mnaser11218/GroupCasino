@@ -13,7 +13,9 @@ public interface PlayerInterface {
     /**
      * @return the `ArcadeAccount` used to log into the `Arcade` system to play this game
      */
-    CasinoAccount getArcadeAccount();
+  //  CasinoAccount getArcadeAccount();
+   // @Override
+    CasinoAccount getArcadeAccount(String userName, String password);
 //    default CasinoAccount getArcadeAccount(String currentUser, String currentPass){
 //        CasinoAccount casinoAccount = new CasinoAccount();
 //        return casinoAccount.getAccount(currentUser, currentPass);
