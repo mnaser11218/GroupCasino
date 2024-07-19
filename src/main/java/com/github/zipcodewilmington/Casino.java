@@ -22,12 +22,14 @@ public class Casino implements Runnable {
 
     public String accountSignedIn;
     public String passwordSignedIn;
+    public CasinoAccountManager casinoAccountManager123;
     private final IOConsole console = new IOConsole(AnsiColor.BLUE);
 
     @Override
     public void run() {
         String arcadeDashBoardInput;
         CasinoAccountManager casinoAccountManager = new CasinoAccountManager();
+        this.casinoAccountManager123 = casinoAccountManager;
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
             if ("select-game".equals(arcadeDashBoardInput)) {
@@ -96,6 +98,8 @@ public class Casino implements Runnable {
         GameInterface game = (GameInterface)gameObject;
         PlayerInterface player = (PlayerInterface)playerObject;
         game.add(player);
+        game.addUserNameAndPassword(this.accountSignedIn, this.passwordSignedIn);
+        game.addCasinoAccountManager(this.casinoAccountManager123);
         game.run();
     }
 }

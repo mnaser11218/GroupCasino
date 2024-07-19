@@ -1,12 +1,14 @@
 package com.github.zipcodewilmington.casino.games.roulette;
 
+import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GamblingGameInterface;
+import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 
 import java.util.Random;
 import java.util.Scanner;
 
-public class RouletteGame implements GamblingGameInterface {
+public class RouletteGame implements GameInterface {
 
     public int storedSpinResult;
 
@@ -152,14 +154,14 @@ public class RouletteGame implements GamblingGameInterface {
         return betType;
     }
 
-    @Override
+   // @Override
     public int askForWager(int playerBet) {
         Scanner scanner = new Scanner(System.in);
         playerBet = scanner.nextInt();
         return playerBet;
     }
 
-    @Override
+   // @Override
     public int adjustBalances(int playerBalance) {
         return 0;
     }
@@ -168,6 +170,17 @@ public class RouletteGame implements GamblingGameInterface {
     public void add(PlayerInterface player) {
 
     }
+
+    @Override
+    public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
+
+    }
+
+    @Override
+    public void addUserNameAndPassword(String userName, String password) {
+
+    }
+
 
     @Override
     public void remove(PlayerInterface player) {
