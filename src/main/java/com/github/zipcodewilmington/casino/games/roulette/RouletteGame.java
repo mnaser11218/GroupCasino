@@ -1,14 +1,22 @@
 package com.github.zipcodewilmington.casino.games.roulette;
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GamblingGameInterface;
-import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.utils.AnsiColor;
 
+import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RouletteGame implements GameInterface {
+public class RouletteGame implements GamblingGameInterface {
+
+    private CasinoAccount myPlayerAccount;
+    public String userName;
+    public String password;
+    public CasinoAccountManager casinoAccountManager;
+    public RoulettePlayer player;
 
     public int storedSpinResult;
 
@@ -20,36 +28,88 @@ public class RouletteGame implements GameInterface {
 //    }
 
     public static void main(String[] args) {
-        System.out.println(
-                "     _____________________________________________________________________\t\n" +
-                "    /|    |    |    |    |    |    |    |    |    |    |    |     |      |  \n" +
-                "   / |  3 |  6 |  9 | 12 | 15 | 18 | 21 | 24 | 27 | 30 | 33 |  36 | 2to1 |\n" +
-                "  /  |____|____|____|____|____|____|____|____|____|____|____|____ |______|\n" +
-                " /   |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
-                "| 0  |  2 |  5 |  8 | 11 | 14 | 17 | 20 | 23 | 26 | 29 | 32 | 35  | 2to1 |\n" +
-                " \\   |____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
-                "  \\  |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
-                "   \\ |  1 |  4 |  7 | 10 | 13 | 16 | 19 | 22 | 25 | 28 | 31 |  34 | 2to1 |\n" +
-                "    \\|____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
-                "     |                   |                   |                    |\n" +
-                "     |      1st 12       |       2nd 12      |      3rd  12       |\n" +
-                "     |___________________|___________________|____________________|\n" +
-                "     |              |              |              |               |\n" +
-                "     |    EVEN      |     RED      |     BLACK    |       ODD     |\n" +
-                "     |______________|______________|______________|_______________|\n" +
-                "        ---------Welcome to Roulette! Place your wager---------");
-        Random rouletteSpin = new Random();
-        RouletteGame roulette = new RouletteGame();
-        int playerBet = roulette.askForWager(0);
-        System.out.println("" + "Which bet type do you feel is luckiest? \n" +
-                "ANY NUMBER || 1ST12 || 2ND12 || 3RD12 || BLACK || RED || ODD || EVEN");
-        String betType = roulette.askForBetType().toUpperCase();
-        roulette.storedSpinResult = rouletteSpin.nextInt(36)+1;
-        int payout =+ roulette.determinePayOutAmount(playerBet,betType);
-        if (payout == 0){
-            System.out.println("the winning number was " + roulette.storedSpinResult + ", lol you lost");
-        } else if (payout > 0){
-            System.out.println("wow you actually got it, the winning number was " + roulette.storedSpinResult);
+//        //   red   [31m
+//        //   auto   [0m
+//        int keepGoing = 0;
+//        while (keepGoing == 0) {
+//            System.out.println(
+//                    "     _____________________________________________________________________\t\n" +
+//                            "    /|    |    |    |    |    |    |    |    |    |    |    |     |      |  \n" +
+//                            "   / | \u001B[31m3\u001B[0m  |  6 |  \u001B[31m9\u001B[0m | \u001B[31m12\u001B[0m | 15 | \u001B[31m18\u001B[0m | \u001B[31m21\u001B[0m | 24 | \u001B[31m27\u001B[0m | \u001B[31m30\u001B[0m | 33 |  \u001B[31m36\u001B[0m | 2to1 |\n" +
+//                            "  /  |____|____|____|____|____|____|____|____|____|____|____|____ |______|\n" +
+//                            " /   |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
+//                            "| 0  |  2 |  \u001B[31m5\u001B[0m |  8 | 11 | \u001B[31m14\u001B[0m | 17 | 20 | \u001B[31m23\u001B[0m | 26 | 29 | \u001B[31m32\u001B[0m | 35  | 2to1 |\n" +
+//                            " \\   |____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
+//                            "  \\  |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
+//                            "   \\ |  \u001B[31m1\u001B[0m |  4 |  \u001B[31m7\u001B[0m | 10 | 13 | \u001B[31m16\u001B[0m | \u001B[31m19\u001B[0m | 22 | \u001B[31m25\u001B[0m | 28 | 31 |  \u001B[31m34\u001B[0m | 2to1 |\n" +
+//                            "    \\|____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
+//                            "     |                   |                   |                    |\n" +
+//                            "     |      1st 12       |       2nd 12      |      3rd  12       |\n" +
+//                            "     |___________________|___________________|____________________|\n" +
+//                            "     |              |              |              |               |\n" +
+//                            "     |    EVEN      |     \u001B[31mRED\u001B[0m      |     WHITE    |       ODD     |\n" +
+//                            "     |______________|______________|______________|_______________|\n" +
+//                            "        ---------Welcome to Roulette! Place your wager---------");
+//            Random rouletteSpin = new Random();
+//            RouletteGame roulette = new RouletteGame();
+//            int playerBet = roulette.askForWager(0);
+//            System.out.println("" + "Which bet type do you feel is luckiest? \n" +
+//                    "ANY NUMBER || 1ST12 || 2ND12 || 3RD12 || WHITE || RED || ODD || EVEN");
+//            String betType = roulette.askForBetType().toUpperCase();
+//            roulette.storedSpinResult = rouletteSpin.nextInt(36)+1;
+//            int payout =+ roulette.determinePayOutAmount(playerBet,betType);
+//            if (payout == 0){
+//                System.out.println("the winning number was " + roulette.storedSpinResult + ", lol you lost");
+//            } else if (payout > 0){
+//                System.out.println("wow you actually got it, the winning number was " + roulette.storedSpinResult + "\n" +
+//                        "your payout is $" + payout);
+//            }
+//            if (roulette.playAgain() == false) {
+//                keepGoing = -1;
+//            }
+//        }
+    }
+
+    public void runRoulette(){
+        //   red   [31m
+        //   auto   [0m
+        int keepGoing = 0;
+        while (keepGoing == 0) {
+            System.out.println(
+                    "     _____________________________________________________________________\t\n" +
+                            "    /|    |    |    |    |    |    |    |    |    |    |    |     |      |  \n" +
+                            "   / | \u001B[31m3\u001B[0m  |  6 |  \u001B[31m9\u001B[0m | \u001B[31m12\u001B[0m | 15 | \u001B[31m18\u001B[0m | \u001B[31m21\u001B[0m | 24 | \u001B[31m27\u001B[0m | \u001B[31m30\u001B[0m | 33 |  \u001B[31m36\u001B[0m | 2to1 |\n" +
+                            "  /  |____|____|____|____|____|____|____|____|____|____|____|____ |______|\n" +
+                            " /   |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
+                            "| 0  |  2 |  \u001B[31m5\u001B[0m |  8 | 11 | \u001B[31m14\u001B[0m | 17 | 20 | \u001B[31m23\u001B[0m | 26 | 29 | \u001B[31m32\u001B[0m | 35  | 2to1 |\n" +
+                            " \\   |____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
+                            "  \\  |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
+                            "   \\ |  \u001B[31m1\u001B[0m |  4 |  \u001B[31m7\u001B[0m | 10 | 13 | \u001B[31m16\u001B[0m | \u001B[31m19\u001B[0m | 22 | \u001B[31m25\u001B[0m | 28 | 31 |  \u001B[31m34\u001B[0m | 2to1 |\n" +
+                            "    \\|____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
+                            "     |                   |                   |                    |\n" +
+                            "     |      1st 12       |       2nd 12      |      3rd  12       |\n" +
+                            "     |___________________|___________________|____________________|\n" +
+                            "     |              |              |              |               |\n" +
+                            "     |    EVEN      |     \u001B[31mRED\u001B[0m      |     WHITE    |       ODD     |\n" +
+                            "     |______________|______________|______________|_______________|\n" +
+                            "        ---------Welcome to Roulette! Place your wager---------");
+            Random rouletteSpin = new Random();
+            RouletteGame roulette = new RouletteGame();
+            int playerBet = roulette.askForWager(0);
+            System.out.println("" + "Which bet type do you feel is luckiest? \n" +
+                    "ANY NUMBER || 1ST12 || 2ND12 || 3RD12 || WHITE || RED || ODD || EVEN");
+            String betType = roulette.askForBetType().toUpperCase();
+            roulette.storedSpinResult = rouletteSpin.nextInt(36)+1;
+            int payout =+ roulette.determinePayOutAmount(playerBet,betType);
+            if (payout == 0){
+                System.out.println("the winning number was " + roulette.storedSpinResult + ", lol you lost");
+            } else if (payout > 0){
+                System.out.println("wow you actually got it, the winning number was " + roulette.storedSpinResult + "\n" +
+                        "your payout is $" + payout);
+            }
+            if (roulette.playAgain() == false) {
+                keepGoing = -1;
+            }
         }
     }
 
@@ -60,23 +120,23 @@ public class RouletteGame implements GameInterface {
         if (isNumber(betType)) {
             multiplier += determinePayOutForNumber(betType);
         } else{
-        switch (betType) {
-            case "ODD":
-            case "EVEN":
-                multiplier += determinePayOutForOddsOrEvens(betType);
-                break;
-            case "1ST12":
-            case "2ND12":
-            case "3RD12":
-                multiplier += determinePayOutFor12s(betType);
-                break;
-            case "BLACK":
-            case "RED":
-                multiplier += determinePayOutForColor(betType);
-                break;
-            default:
-                break;
-        }
+            switch (betType) {
+                case "ODD":
+                case "EVEN":
+                    multiplier += determinePayOutForOddsOrEvens(betType);
+                    break;
+                case "1ST12":
+                case "2ND12":
+                case "3RD12":
+                    multiplier += determinePayOutFor12s(betType);
+                    break;
+                case "WHITE":
+                case "RED":
+                    multiplier += determinePayOutForColor(betType);
+                    break;
+                default:
+                    break;
+            }
         }
         return payout*multiplier;
     }
@@ -116,14 +176,14 @@ public class RouletteGame implements GameInterface {
 
     public int determinePayOutForColor(String betType) {
         int[] red = new int[]{1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36};
-        int[] black = new int[]{15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26};
+        int[] white = new int[]{15, 4, 2, 17, 6, 13, 11, 8, 10, 24, 33, 20, 31, 22, 29, 28, 35, 26};
         for (int element: red){
             if (element == storedSpinResult && betType.equals("RED")){
                 return 1;
             }
         }
-        for (int element : black){
-            if (element == storedSpinResult && betType.equals("BLACK")){
+        for (int element : white){
+            if (element == storedSpinResult && betType.equals("WHITE")){
                 return 1;
             }
         }
@@ -131,9 +191,12 @@ public class RouletteGame implements GameInterface {
     }
 
     public int determinePayOutForNumber(String betType) {
-        if (isNumber(betType) && storedSpinResult == Integer.parseInt(betType)){
+        if (isNumber(betType) && storedSpinResult == Integer.parseInt(betType) && Integer.parseInt(betType) > 0 && Integer.parseInt(betType) < 37){
             return 35;
-        } else {
+        } else if (isNumber(betType) && storedSpinResult == Integer.parseInt(betType) && Integer.parseInt(betType) < 0 || Integer.parseInt(betType) > 37){
+            System.out.println("please try again");
+            return 0;
+        } else{
             return 0;
         }
     }
@@ -150,35 +213,45 @@ public class RouletteGame implements GameInterface {
 
     public String askForBetType() {
         Scanner scanner = new Scanner(System.in);
+
         String betType = scanner.nextLine();
         return betType;
     }
 
-   // @Override
-    public int askForWager(int playerBet) {
-        Scanner scanner = new Scanner(System.in);
-        playerBet = scanner.nextInt();
-        return playerBet;
+    public void random(){
+        Random rouletteSpin = new Random();
+        storedSpinResult = rouletteSpin.nextInt(37)+1;
     }
 
-   // @Override
-    public int adjustBalances(int playerBalance) {
-        return 0;
+    public boolean playAgain(){
+        System.out.println("\nwould you like to play again, Y/N?");
+        Scanner scanner = new Scanner(System.in);
+        String userInput = scanner.nextLine().toUpperCase();
+        if (userInput.equals("Y")){
+            return true;
+        } else if (userInput.equals("N")){
+            return false;
+        } else {
+            return playAgain();
+        }
     }
 
     @Override
     public void add(PlayerInterface player) {
+        this.player=(RoulettePlayer)player;
 
     }
 
     @Override
     public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
-
+        this.casinoAccountManager=casinoAccountManager;
     }
 
     @Override
     public void addUserNameAndPassword(String userName, String password) {
 
+        this.userName=userName;
+        this.password=password;
     }
 
 
@@ -189,7 +262,26 @@ public class RouletteGame implements GameInterface {
 
     @Override
     public void run() {
-    Random rouletteSpin = new Random();
-    storedSpinResult = rouletteSpin.nextInt(37)+1;
+        System.out.println(this.userName);
+        CasinoAccount casinoAccount = this.casinoAccountManager.getAccount(this.userName,this.password);
+        System.out.println("Username is: "+casinoAccount.getAccountName() + "password: " + casinoAccount.getPassword() + "your balance is " +casinoAccount.accountBalance);
+        runRoulette();
+    }
+
+    @Override
+    public int askForWager(int playerBet) {
+        Scanner scanner = new Scanner(System.in);
+        try {
+            playerBet = scanner.nextInt();
+            return playerBet;
+        }catch(Exception e){
+            System.out.println("Your wager in numbers please");
+            return askForWager(playerBet);
+        }
+    }
+
+    @Override
+    public int adjustBalances(int playerBalance) {
+        return 0;
     }
 }
