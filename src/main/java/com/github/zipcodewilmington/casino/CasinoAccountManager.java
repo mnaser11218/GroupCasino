@@ -37,6 +37,7 @@ public class CasinoAccountManager {
                 casinoAccounter = casinoAccount;
             }
         }
+        System.out.println( "inside get account method, the name is: " + casinoAccounter.getAccountName());
         return casinoAccounter;
     }
 
@@ -67,6 +68,7 @@ public class CasinoAccountManager {
         for(CasinoAccount account : this.arcadeAccountList){
             System.out.println("account name: " + account.getAccountName());
         }
+      //  getAccount(casinoAccount.getAccountName(), casinoAccount.getPassword());
         //System.out.println("account list " +  casinoAccount.getArcadeAccountList());
         String errorMessage = "Method with name [ %s ], defined in class with name [ %s ] has  not yet been implemented";
         //throw new RuntimeException(String.format(errorMessage, currentMethodName, currentClassName));

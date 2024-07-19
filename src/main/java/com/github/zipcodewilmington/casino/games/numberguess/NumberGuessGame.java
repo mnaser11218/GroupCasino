@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.numberguess;
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 
@@ -15,7 +16,8 @@ public class NumberGuessGame implements GameInterface {
     private int randomNumber=0;
     private ArrayList<Integer> userInputs = new ArrayList<>();
     private boolean appClosed = false;
-    private NumberGuessPlayer player;
+    public NumberGuessPlayer player;
+   // private CasinoAccount playerAccount;
 
 
     public NumberGuessGame() {
@@ -81,14 +83,15 @@ public class NumberGuessGame implements GameInterface {
     }
     public void add(PlayerInterface player){
         //this.player = (NumberGuessPlayer)player;
-        this.player = (NumberGuessPlayer) player;
+        this.player = (NumberGuessPlayer)player;
+
+       //this.playerAccount = player.getArcadeAccount();
     }
 
     public void run(){
-       // PlayerInterface playerInterface = player;
-        //player.helloWorld();
-        //this.player.getArcadeAccount();
-       // System.out.println(this.player.getAccountName());
+       // System.out.println(this.player.getArcadeAccount());
+        //System.out.println(player.getAccount());
+        //System.out.println(this.player.getAccountName());
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select a number between 0 to 100");
         generateRandomNumber();
