@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.numberguess;
 
+import com.github.zipcodewilmington.Casino;
 import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
@@ -10,14 +11,14 @@ import java.util.Scanner;
 /**
  * Created by leon on 7/21/2020.
  */
-public class NumberGuessGame implements GameInterface {
+public class NumberGuessGame extends Casino implements GameInterface {
 
     private int userNumber =0;
     private int randomNumber=0;
     private ArrayList<Integer> userInputs = new ArrayList<>();
     private boolean appClosed = false;
     public NumberGuessPlayer player;
-   // private CasinoAccount playerAccount;
+    private CasinoAccount myPlayerAccount;
 
 
     public NumberGuessGame() {
@@ -91,7 +92,8 @@ public class NumberGuessGame implements GameInterface {
     public void run(){
        // System.out.println(this.player.getArcadeAccount());
         //System.out.println(player.getAccount());
-        //System.out.println(this.player.getAccountName());
+//        System.out.println(this.player.getAccountName());
+        System.out.println("Hello there, " + "");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select a number between 0 to 100");
         generateRandomNumber();
@@ -110,6 +112,7 @@ public class NumberGuessGame implements GameInterface {
     public void remove(PlayerInterface player) {
         this.player = null;
     }
+
 
 //    public static void main(String[] args) {
 //        NumberGuessGame numberGuessGame = new NumberGuessGame();

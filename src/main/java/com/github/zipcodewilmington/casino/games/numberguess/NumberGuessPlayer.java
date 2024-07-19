@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.numberguess;
 
+import com.github.zipcodewilmington.Casino;
 import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.PlayerInterface;
@@ -13,6 +14,12 @@ public class NumberGuessPlayer extends CasinoAccountManager implements PlayerInt
     public String getUserName() {
         return userName;
     }
+//    public CasinoAccount theCasinoAccount;
+//
+//    public NumberGuessPlayer(CasinoAccount casAcct){
+//        this.theCasinoAccount = casAcct;
+//    }
+
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -33,7 +40,11 @@ public class NumberGuessPlayer extends CasinoAccountManager implements PlayerInt
 
     @Override
     public CasinoAccount getArcadeAccount() {
+        return getAccount(userName, password);
+    }
 
-        return null;
+    @Override
+    public CasinoAccount getAccount(String accountName, String accountPassword) {
+        return super.getAccount(accountName, accountPassword);
     }
 }

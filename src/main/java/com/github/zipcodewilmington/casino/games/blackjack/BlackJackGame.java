@@ -46,7 +46,7 @@ public class BlackJackGame implements GamblingGameInterface {
             System.out.println(x.getCardValue() + " of " + x.getSuit());
             totalOfDealerHand += x.getCardValue();
         }
-        System.out.println("Your hand total: " + totalOfDealerHand);
+        System.out.println("Dealer hand total: " + totalOfDealerHand);
 
     }
 
@@ -120,7 +120,6 @@ public class BlackJackGame implements GamblingGameInterface {
 
     @Override
     public void run() {
-
         //print blackjack console
         //set bet
         //initialize new game/round
@@ -134,16 +133,51 @@ public class BlackJackGame implements GamblingGameInterface {
     }
 
     public static void dealersTurn(){
-        //if dealerTotal is <= 16, you must hit.
+        System.out.println("*************************");
+        System.out.println("NOW IT'S THE DEALERS TURN...");
+        System.out.println("*************************");
+        if (totalOfDealerHand <= 16){
+            dealerHand.add(deck.dealACard());
+            System.out.println("Dealer hit...");
+        } else if (totalOfDealerHand > 21){
+            System.out.println("Dealer busted...");
+            //do nothing > findWinner will display that dealer busted
+        } else if (totalOfDealerHand == 21){
+            System.out.println("Dealer has blackjack...");
+            //do nothing > findWinner will display blackjack
+        } else if (totalOfDealerHand > 16 && totalOfDealerHand < 21){
+            System.out.println("Dealer stands...");
+            //do nothing > this will indicate dealer just stands
+        }
+        totalOfDealerHand = 0;
+        displayDealerHand();
+        System.out.println("************************************");
+//        System.out.println("Dealer Hand's FINAL total: " + totalOfDealerHand);
+
+        //if dealerTotal is <= 16, dealer must hit.
+        //if the dealerTotal is greater than 21, stop hitting.
+        //if it equals 21, stop hitting.
+        //if its less than 21, keep hitting.
         //if 17 or more, you must stand.
     }
 
 
     public static void displayBeginning(){
+        boolean initial = true;
+        int userInput = 0;
+        while (initial){
         System.out.println("\n****** WELCOME TO BLACK JACK! ******");
         System.out.println("Please place your bet: (Min: $5 / Max $50)");
         System.out.println("************************************");
-        int userInput = scanner.nextInt();
+        userInput = scanner.nextInt();
+
+        if (userInput < 5){
+            System.out.println("Sorry buddy, you need at least $5.");
+        } else if (userInput > 50){
+            System.out.println("The maximum bet is $50, can't you read?");
+        } else {
+            initial = false;
+        }}
         System.out.println("Dealer matches your bet.");
         System.out.println("Total Pot: " + (userInput * 2));
     }
@@ -168,7 +202,7 @@ public class BlackJackGame implements GamblingGameInterface {
                 System.out.println("Not an option.");
             }
         }
-
+        dealersTurn();
         findTheWinner();
 
         System.out.println("\nPlay another hand?\nPress 1): Yes\nPress 2): No");
