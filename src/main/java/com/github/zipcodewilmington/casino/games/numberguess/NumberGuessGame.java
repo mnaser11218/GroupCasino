@@ -1,23 +1,37 @@
 package com.github.zipcodewilmington.casino.games.numberguess;
 
+import com.github.zipcodewilmington.Casino;
+import com.github.zipcodewilmington.casino.CasinoAccount;
+import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Created by leon on 7/21/2020.
  */
-public class NumberGuessGame implements GameInterface {
+public class NumberGuessGame extends CasinoAccountManager implements GameInterface {
 
     private int userNumber =0;
     private int randomNumber=0;
     private ArrayList<Integer> userInputs = new ArrayList<>();
     private boolean appClosed = false;
-    private NumberGuessPlayer player;
+    public NumberGuessPlayer player;
+    private CasinoAccount myPlayerAccount;
+    public String userName;
+    public String password;
+    public CasinoAccountManager casinoAccountManager;
 
-
+    public void addUserNameAndPassword(String userName, String password){
+        this.userName = userName;
+        this.password = password;
+    }
+    public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager){
+        this.casinoAccountManager = casinoAccountManager;
+    }
     public NumberGuessGame() {
     }
 
@@ -81,14 +95,23 @@ public class NumberGuessGame implements GameInterface {
     }
     public void add(PlayerInterface player){
         //this.player = (NumberGuessPlayer)player;
-        this.player = (NumberGuessPlayer) player;
+        this.player = (NumberGuessPlayer)player;
+
+       //this.playerAccount = player.getArcadeAccount();
     }
 
+
+
     public void run(){
-       // PlayerInterface playerInterface = player;
-        //player.helloWorld();
-        //this.player.getArcadeAccount();
-       // System.out.println(this.player.getAccountName());
+       // System.out.println(this.player.getArcadeAccount());
+        //System.out.println(player.getAccount());
+//        System.out.println(this.player.getAccountName());
+       CasinoAccount casino123= this.casinoAccountManager.getAccount(this.userName, this.password);
+        System.out.println("username is: " + casino123.getAccountName() + " password is: " + casino123.getPassword() + " your balance is: "+ casino123.getAccountBalance());
+//      CasinoAccount user123 =  this.player.getArcadeAccount(this.userName, this.password);
+//        System.out.println( "your account name is: " + user123.getAccountName());
+
+        System.out.println("Hello there, " + "");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select a number between 0 to 100");
         generateRandomNumber();
@@ -107,6 +130,7 @@ public class NumberGuessGame implements GameInterface {
     public void remove(PlayerInterface player) {
         this.player = null;
     }
+
 
 //    public static void main(String[] args) {
 //        NumberGuessGame numberGuessGame = new NumberGuessGame();
