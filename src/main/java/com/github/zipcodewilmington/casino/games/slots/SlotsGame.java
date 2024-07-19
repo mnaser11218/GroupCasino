@@ -1,5 +1,9 @@
-package com.github.zipcodewilmington.casino.games.slots;
+ package com.github.zipcodewilmington.casino.games.slots;
 
+
+import com.github.zipcodewilmington.casino.CasinoAccountManager;
+import com.github.zipcodewilmington.casino.GamblingGameInterface;
+import com.github.zipcodewilmington.casino.PlayerInterface;
 
 import java.util.*;
 
@@ -7,40 +11,43 @@ import java.util.*;
 /**
  * Created by leon on 7/21/2020.
  */
-public class SlotsGame {
+public class SlotsGame implements GamblingGameInterface {
     Scanner scanner = new Scanner(System.in);
     int wagerAmount;
     ArrayList<Integer> randomList;
 
+    public String userName;
+    public String password;
+    public CasinoAccountManager casinoAccountManager;
+    public SlotsPlayer player;
+
+    @Override
+    public void addUserNameAndPassword(String userName, String password) {
+        this.userName = userName;
+        this.password = password;
+    }
+    @Override
+    public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
+        this.casinoAccountManager = casinoAccountManager;
+    }
+    @Override
+    public void add(PlayerInterface player) {
+        this.player = (SlotsPlayer)player;
+    }
+    @Override
+    public int askForWager(int playerBet) {
+        return 0;
+    }
+    @Override
+    public int adjustBalances(int playerBalance) {
+        return 0;
+    }
+    @Override
+    public void remove(PlayerInterface player) {
+
+    }
+
     public static void main(String[] args) {
-        int startGambling = 0;
-
-        while (startGambling == 0) {
-            SlotsGame slots = new SlotsGame();
-            slots.placeWager(slots.wagerAmount);
-
-            if (slots.checkForjackpot(slots.randomList)){
-                slots.payOutForJackpot(100, slots.wagerAmount);
-                System.out.println("You got paid: " + slots.payOutForJackpot(0, slots.wagerAmount));
-                if (slots.pullLever() == false) {
-                    startGambling = 1;
-                }
-            } else if (slots.checkForMatchFive(slots.randomList)) {
-                slots.payOutForFive(40, slots.wagerAmount);
-                System.out.println("You got paid: " + slots.payOutForFive(0, slots.wagerAmount));
-                if (slots.pullLever() == false) {
-                    startGambling = 1;
-                }
-
-            } else if (slots.checkForMatchThree(slots.randomList)) {
-                slots.payOutForThree(15, slots.wagerAmount);
-                System.out.println("You got paid: " + slots.payOutForThree(0, slots.wagerAmount));
-                if (slots.pullLever() == false) {
-                    startGambling = 1;
-
-                }
-            }
-        }
     }
 
     /*===================================
@@ -181,9 +188,9 @@ public class SlotsGame {
                 default:
                     System.out.println("That's not an option." +
                             "\nHow much would you like to bet? 5, 10, 20, 50, 100, 250");
-                }
             }
         }
+    }
 
 
     public boolean pullLever() {
@@ -198,6 +205,52 @@ public class SlotsGame {
                     return false;
                 default:
                     System.out.println("That's not an option. Would you like to continue? [Yes] [No]");
+            }
+        }
+    }
+
+//    @Override
+//    public int askForWager(int playerBet) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public int adjustBalances(int playerBalance) {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void remove(PlayerInterface player) {
+//
+//    }
+
+    @Override
+    public void run() {
+        int startGambling = 0;
+
+        while (startGambling == 0) {
+            SlotsGame slots = new SlotsGame();
+            slots.placeWager(slots.wagerAmount);
+
+            if (slots.checkForjackpot(slots.randomList)){
+                slots.payOutForJackpot(100, slots.wagerAmount);
+                System.out.println("You got paid: " + slots.payOutForJackpot(0, slots.wagerAmount));
+                if (slots.pullLever() == false) {
+                    startGambling = 1;
+                }
+            } else if (slots.checkForMatchFive(slots.randomList)) {
+                slots.payOutForFive(40, slots.wagerAmount);
+                System.out.println("You got paid: " + slots.payOutForFive(0, slots.wagerAmount));
+                if (slots.pullLever() == false) {
+                    startGambling = 1;
+                }
+            } else if (slots.checkForMatchThree(slots.randomList)) {
+                slots.payOutForThree(15, slots.wagerAmount);
+                System.out.println("You got paid: " + slots.payOutForThree(0, slots.wagerAmount));
+                if (slots.pullLever() == false) {
+                    startGambling = 1;
+
+                }
             }
         }
     }
