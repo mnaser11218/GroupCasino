@@ -66,7 +66,7 @@ public class CasinoAccountManager {
         String currentClassName = getClass().getName();
         arcadeAccountList.add(casinoAccount);
         for(CasinoAccount account : this.arcadeAccountList){
-            System.out.println("account name: " + account.getAccountName());
+            System.out.println("Player Account: " + account.getAccountName());
         }
       //  getAccount(casinoAccount.getAccountName(), casinoAccount.getPassword());
         //System.out.println("account list " +  casinoAccount.getArcadeAccountList());

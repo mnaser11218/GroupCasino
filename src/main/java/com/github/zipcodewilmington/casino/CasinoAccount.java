@@ -60,8 +60,8 @@ public class CasinoAccount extends CasinoAccountManager {
         this.accountBalance = accountBalance;
     }
 
-    public static void main(String[] args) {
-    }
+//    public static void main(String[] args) {
+//    }
 
 
 }
