@@ -4,6 +4,8 @@ import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.casino.games.beatTheDealer.BeatTheDealer;
+import com.github.zipcodewilmington.casino.games.beatTheDealer.BeatTheDealerPlayer;
 import com.github.zipcodewilmington.casino.games.blackjack.BlackJackGame;
 import com.github.zipcodewilmington.casino.games.blackjack.BlackJackPlayer;
 import com.github.zipcodewilmington.casino.games.keno.KenoGame;
@@ -51,17 +53,19 @@ public class Casino implements Runnable {
                         play(new RouletteGame(), new RoulettePlayer());
                     }else if(gameSelectionInput.equals("BLACKJACK")){
                         play(new BlackJackGame(), new BlackJackPlayer());
-                    }else if (gameSelectionInput.equals("KENO")){
-                            play(new KenoGame(), new KenoPlayer());
+                    }else if (gameSelectionInput.equals("KENO")) {
+                        play(new KenoGame(), new KenoPlayer());
+                    } else if (gameSelectionInput.equals("BEAT THE DEALER")){
+                        play(new BeatTheDealer(), new BeatTheDealerPlayer());
                     } else {
                         // TODO - implement better exception handling
-                        String errorMessage = "[ %s ] is an invalid game selection";
+                        String errorMessage = "\u001B[31m[ %s ] is an invalid game selection.\u001B[0m";
                         //throw new RuntimeException(String.format(errorMessage, gameSelectionInput));
                         System.out.printf((errorMessage) + "%n", gameSelectionInput);
                     }
                 } else {
                     // TODO - implement better exception handling
-                   String errorMessage = "No account found with name of [ %s ] and password of [ %s ]";
+                   String errorMessage = "\u001B[31mNo account found with name of [ %s ] and password of [ %s ]\u001B[0m";
 //                    throw new RuntimeException(String.format(errorMessage, accountPassword, accountName));
                    // continue;
                     System.out.printf((errorMessage) + "%n", accountPassword, accountName);
@@ -81,8 +85,27 @@ public class Casino implements Runnable {
     }
 
     private String getArcadeDashboardInput() {
+        System.out.println("\n\u001B[35m ███████████ █████   █████ ██████████                                     \n" +
+                "░█░░░███░░░█░░███   ░░███ ░░███░░░░░█                                     \n" +
+                "░   ░███  ░  ░███    ░███  ░███  █ ░                                      \n" +
+                "    ░███     ░███████████  ░██████                                        \n" +
+                "    ░███     ░███░░░░░███  ░███░░█                                        \n" +
+                "    ░███     ░███    ░███  ░███ ░   █                                     \n" +
+                "    █████    █████   █████ ██████████                                     \n" +
+                "   ░░░░░    ░░░░░   ░░░░░ ░░░░░░░░░░                                      \n" +
+                "                                                                          \n" +
+                "                                                                          \n" +
+                "                                                                          \n" +
+                "   █████████    █████████    █████████  █████ ██████   █████    ███████   \n" +
+                "  ███░░░░░███  ███░░░░░███  ███░░░░░███░░███ ░░██████ ░░███   ███░░░░░███ \n" +
+                " ███     ░░░  ░███    ░███ ░███    ░░░  ░███  ░███░███ ░███  ███     ░░███\n" +
+                "░███          ░███████████ ░░█████████  ░███  ░███░░███░███ ░███      ░███\n" +
+                "░███          ░███░░░░░███  ░░░░░░░░███ ░███  ░███ ░░██████ ░███      ░███\n" +
+                "░░███     ███ ░███    ░███  ███    ░███ ░███  ░███  ░░█████ ░░███     ███ \n" +
+                " ░░█████████  █████   █████░░█████████  █████ █████  ░░█████ ░░░███████░  \n" +
+                "  ░░░░░░░░░  ░░░░░   ░░░░░  ░░░░░░░░░  ░░░░░ ░░░░░    ░░░░░    ░░░░░░░    ");
         return console.getStringInput(new StringBuilder()
-                .append("Welcome to the Arcade Dashboard!")
+                .append("\nWelcome to the Arcade Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
                 .append("\n\t[ create-account ], [ select-game ]")
                 .toString());
