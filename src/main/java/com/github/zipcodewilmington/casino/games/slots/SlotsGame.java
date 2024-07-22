@@ -1,6 +1,7 @@
  package com.github.zipcodewilmington.casino.games.slots;
 
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GamblingGameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
@@ -13,13 +14,15 @@ import java.util.*;
  */
 public class SlotsGame implements GamblingGameInterface {
     Scanner scanner = new Scanner(System.in);
-    int wagerAmount;
-    ArrayList<Integer> randomList;
+    public int wagerAmount;
+    public int stopGame = 0;
+    ArrayList<Integer> randomList = new ArrayList<>();
 
     public String userName;
     public String password;
     public CasinoAccountManager casinoAccountManager;
     public SlotsPlayer player;
+    public CasinoAccount userPlayer;
 
     @Override
     public void addUserNameAndPassword(String userName, String password) {
@@ -29,6 +32,7 @@ public class SlotsGame implements GamblingGameInterface {
     @Override
     public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
         this.casinoAccountManager = casinoAccountManager;
+        this.userPlayer = this.casinoAccountManager.getAccount(this.userName, this.password);
     }
     @Override
     public void add(PlayerInterface player) {
@@ -44,7 +48,6 @@ public class SlotsGame implements GamblingGameInterface {
     }
     @Override
     public void remove(PlayerInterface player) {
-
     }
 
     public static void main(String[] args) {
@@ -63,7 +66,9 @@ public class SlotsGame implements GamblingGameInterface {
             for (int i = 0; i < size; i++){
                 newArray.add(random.nextInt(10));
             }
-            System.out.println(newArray);
+            if (!newArray.isEmpty()) {
+                System.out.println(newArray);
+            }
         }
         this.randomList = newArray;
         return newArray;
@@ -112,6 +117,7 @@ public class SlotsGame implements GamblingGameInterface {
         }
 
         if (maxCount == 5){
+            System.out.println("You matched 5!");
             return true;
         } else {
             return false;
@@ -124,24 +130,31 @@ public class SlotsGame implements GamblingGameInterface {
                 return false;
             }
         }
+        System.out.println("JACKPOT");
         return true;
     }
 
     public int payOutForThree(int payOutThree, int wagerAmount) {
         payOutThree = 15;
         int payout = payOutThree * wagerAmount;
+        userPlayer.setAccountBalance(userPlayer.getAccountBalance() + payout);
+        System.out.println("You got paid: " + payout + "\nYour new balance is: " + userPlayer.getAccountBalance());
         return payout;
     }
 
     public int payOutForFive(int payOutFive, int wagerAmount) {
         payOutFive = 100;
         int payout = payOutFive * wagerAmount;
+        userPlayer.setAccountBalance(userPlayer.getAccountBalance() + payout);
+        System.out.println("You got paid: " + payout + "\nYour new balance is: " + userPlayer.getAccountBalance());
         return payout;
     }
 
     public int payOutForJackpot(int payOutJackpot, int wagerAmount) {
         payOutJackpot = 1000;
         int payout = payOutJackpot * wagerAmount;
+        userPlayer.setAccountBalance(userPlayer.getAccountBalance() + payout);
+        System.out.println("You got paid: " + payout + "\nYour new balance is: " + userPlayer.getAccountBalance());
         return payout;
     }
 
@@ -150,39 +163,55 @@ public class SlotsGame implements GamblingGameInterface {
     ===================================*/
 
     public void placeWager(int bet) {
-        System.out.print("How much would you like to bet? 5, 10, 20, 50, 100, 250: ");
+        System.out.print("How much would you like to bet? 0, 5, 10, 20, 50, 100, 250: ");
         bet = 0;
         while (true) {
             bet = scanner.nextInt();
             switch (bet) {
+                case 0:
+                    System.out.println("Thank you for playing slots! See you soon!\n\n");
+                    this.stopLever();
+                    return;
                 case 5:
                     this.wagerAmount = bet;
                     System.out.println("You've bet: 5");
+                    userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 5);
+                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 10:
                     this.wagerAmount = bet;
                     System.out.println("You've bet: 10");
+                    userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 10);
+                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 20:
                     this.wagerAmount = bet;
                     System.out.println("You've bet: 20");
+                    userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 20);
+                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 50:
                     this.wagerAmount = bet;
                     System.out.println("You've bet: 50");
+                    userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 50);
+                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 100:
                     this.wagerAmount = bet;
                     System.out.println("You've bet: 100");
+                    userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 100);
+                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 250:
                     this.wagerAmount = bet;
                     System.out.println("You've bet: 250");
+                    userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 250);
+                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 default:
@@ -192,16 +221,17 @@ public class SlotsGame implements GamblingGameInterface {
         }
     }
 
-
     public boolean pullLever() {
+        Scanner scanner1 = new Scanner(System.in);
         System.out.println("Would you like to continue? [Yes] [No]");
-
         while (true) {
-            String choice = scanner.nextLine();
+            String choice = scanner1.nextLine();
             switch (choice) {
                 case "yes":
+                    System.out.println("Your Current Balance is: " + userPlayer.getAccountBalance());
                     return true;
                 case "no":
+                    System.out.println("Thank you for playing Slots. Come gamble again!\n\n");
                     return false;
                 default:
                     System.out.println("That's not an option. Would you like to continue? [Yes] [No]");
@@ -209,47 +239,38 @@ public class SlotsGame implements GamblingGameInterface {
         }
     }
 
-//    @Override
-//    public int askForWager(int playerBet) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public int adjustBalances(int playerBalance) {
-//        return 0;
-//    }
-//
-//    @Override
-//    public void remove(PlayerInterface player) {
-//
-//    }
+    public int stopLever() {
+        stopGame = 1;
+        return stopGame;
+    }
 
     @Override
     public void run() {
         int startGambling = 0;
+        System.out.println("Your Current Balance is: " + userPlayer.getAccountBalance());
 
         while (startGambling == 0) {
-            SlotsGame slots = new SlotsGame();
-            slots.placeWager(slots.wagerAmount);
+            placeWager(wagerAmount);
 
-            if (slots.checkForjackpot(slots.randomList)){
-                slots.payOutForJackpot(100, slots.wagerAmount);
-                System.out.println("You got paid: " + slots.payOutForJackpot(0, slots.wagerAmount));
-                if (slots.pullLever() == false) {
+            if (stopGame == 1) {
+                break;
+            }
+            if (checkForjackpot(randomList)){
+                payOutForJackpot(100, wagerAmount);
+                if (!this.randomList.isEmpty()) {
+                }
+                if (pullLever() == false) {
                     startGambling = 1;
                 }
-            } else if (slots.checkForMatchFive(slots.randomList)) {
-                slots.payOutForFive(40, slots.wagerAmount);
-                System.out.println("You got paid: " + slots.payOutForFive(0, slots.wagerAmount));
-                if (slots.pullLever() == false) {
+            } else if (checkForMatchFive(randomList)) {
+                payOutForFive(40, wagerAmount);
+                if (pullLever() == false) {
                     startGambling = 1;
                 }
-            } else if (slots.checkForMatchThree(slots.randomList)) {
-                slots.payOutForThree(15, slots.wagerAmount);
-                System.out.println("You got paid: " + slots.payOutForThree(0, slots.wagerAmount));
-                if (slots.pullLever() == false) {
+            } else if (checkForMatchThree(randomList)) {
+                payOutForThree(15, wagerAmount);
+                if (pullLever() == false) {
                     startGambling = 1;
-
                 }
             }
         }
