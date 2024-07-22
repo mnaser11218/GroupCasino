@@ -35,12 +35,9 @@ public class CasinoAccountManager {
         CasinoAccount casinoAccounter = null;
         for(CasinoAccount casinoAccount : this.arcadeAccountList){
             if(casinoAccount.getAccountName().equals(accountName) && casinoAccount.getPassword().equals(accountPassword)){
-                System.out.println("we are in the if statement");
                casinoAccounter = casinoAccount;
-               // casinoAccounter =
             }
         }
-       // System.out.println( "inside get account method, the name is: " + casinoAccounter.getAccountName());
         return casinoAccounter;
     }
 

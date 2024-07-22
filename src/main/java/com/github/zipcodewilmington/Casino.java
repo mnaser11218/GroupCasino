@@ -60,8 +60,10 @@ public class Casino implements Runnable {
                     }
                 } else {
                     // TODO - implement better exception handling
-                    String errorMessage = "No account found with name of [ %s ] and password of [ %s ]";
-                    throw new RuntimeException(String.format(errorMessage, accountPassword, accountName));
+                   String errorMessage = "No account found with name of [ %s ] and password of [ %s ]";
+//                    throw new RuntimeException(String.format(errorMessage, accountPassword, accountName));
+                   // continue;
+                    System.out.printf((errorMessage) + "%n", accountPassword, accountName);
                 }
             } else if ("create-account".equals(arcadeDashBoardInput)) {
                 console.println("Welcome to the account-creation screen.");
@@ -69,6 +71,9 @@ public class Casino implements Runnable {
                 String accountPassword = console.getStringInput("Enter your account password:");
                 CasinoAccount newAccount = casinoAccountManager.createAccount(accountName, accountPassword);
                 casinoAccountManager.registerAccount(newAccount);
+                Integer amountToAdd = console.getIntegerInput("Please add money to your balance:  \n How much would you like to add?");
+                casinoAccountManager.getAccount(accountName, accountPassword).setAccountBalance(amountToAdd);
+                System.out.println("Your new balance is: " + casinoAccountManager.getAccount(accountName, accountPassword).getAccountBalance() + " \n Have fun wasting your money!");
                // System.out.println("inside get account : " + casinoAccountManager.getAccount(accountName, accountPassword).getAccountName());
             }
         } while (!"logout".equals(arcadeDashBoardInput));

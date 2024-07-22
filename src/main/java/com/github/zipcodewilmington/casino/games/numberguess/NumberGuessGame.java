@@ -95,50 +95,29 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
         return r;
     }
     public void add(PlayerInterface player){
-        //this.player = (NumberGuessPlayer)player;
         this.player = (NumberGuessPlayer)player;
-
-       //this.playerAccount = player.getArcadeAccount();
     }
 
 
 
     public void run(){
-       // System.out.println(this.player.getArcadeAccount());
-        //System.out.println(player.getAccount());
-//        System.out.println(this.player.getAccountName());
-     // this.myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + 5);
-     //   System.out.println("your balance is :" + myPlayerAccount.getAccountBalance());
-       // System.out.println("username is: " + casino123.getAccountName() + " password is: " + casino123.getPassword() + " your balance is: "+ casino123.getAccountBalance());
-//      CasinoAccount user123 =  this.player.getArcadeAccount(this.userName, this.password);
-//        System.out.println( "your account name is: " + user123.getAccountName());
 
-        System.out.println("Hello there, " + "");
+        System.out.println("Welcome, your balance is : " + myPlayerAccount.getAccountBalance());
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select a number between 0 to 100");
         generateRandomNumber();
         while(!appClosed){
             System.out.println("Please enter a number");
            userNumber = scanner.nextInt();
-           // System.out.println("you entered the number " + userNumber);
             checkIfNumberTooHighOrTooLow();
         }
 
     }
 
 
-
     @Override
     public void remove(PlayerInterface player) {
         this.player = null;
     }
-
-
-//    public static void main(String[] args) {
-//        NumberGuessGame numberGuessGame = new NumberGuessGame();
-//        numberGuessGame.run();
-//
-//    }
-
 
 }
