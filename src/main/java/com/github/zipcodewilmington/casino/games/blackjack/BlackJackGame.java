@@ -22,6 +22,8 @@ public class BlackJackGame implements GamblingGameInterface {
     public  String password;
     public  CasinoAccountManager casinoAccountManager;
     public  BlackJackPlayer player;
+    public CasinoAccount myPlayerAccount;
+    public int totalPot = 0;
 
     @Override
     public void addUserNameAndPassword(String userName, String password){
@@ -31,6 +33,7 @@ public class BlackJackGame implements GamblingGameInterface {
     @Override
     public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager){
         this.casinoAccountManager = casinoAccountManager;
+        this.myPlayerAccount = this.casinoAccountManager.getAccount(this.userName, this.password);
     }
 
 
@@ -88,30 +91,50 @@ public class BlackJackGame implements GamblingGameInterface {
 
         if (playerResult == 0) {
             System.out.println("YOU HAVE BLACKJACK!!!!!!!!!");
+            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + totalPot);
+            displayUpdatedBalance();
             return; // End the method if player has blackjack
         } else if (dealerResult == 0) {
             System.out.println("DEALER HAS BLACKJACK! YOU LOST!!!");
+//            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() - (totalPot / 2));
+            displayUpdatedBalance();
             return; // End the method if dealer has blackjack
         }
 
         if (totalOfPlayerHand > 21) {
             System.out.println("The dealer wins... YOU LOSE.");
+//            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() - (totalPot / 2));
+            displayUpdatedBalance();
             return; // End the method if player busts
         } else if (totalOfDealerHand > 21) {
             System.out.println("You win the pot!!! Money, baby!");
+            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + totalPot);
+            displayUpdatedBalance();
             return; // End the method if dealer busts
         }
 
         if (playerResult == dealerResult) {
             System.out.println("It's a push.");
+            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + (totalPot / 2));
+            displayUpdatedBalance();
             return; // End the method if it's a tie
         }
 
         if (dealerResult < playerResult) {
             System.out.println("The dealer wins... YOU LOSE.");
+//            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() - (totalPot / 2));
+            displayUpdatedBalance();
         } else if (playerResult < dealerResult) {
             System.out.println("You win the pot!!! Money, baby!");
+            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + totalPot);
+            displayUpdatedBalance();
         }
+    }
+
+    public void displayUpdatedBalance(){
+        System.out.println(">>> $$$$$$$$$$ <<<");
+        System.out.println("Your Current Balance is now " + myPlayerAccount.getAccountBalance() + ".");
+        System.out.println(">>> $$$$$$$$$$ <<<");
     }
 
     @Override
@@ -169,7 +192,7 @@ public class BlackJackGame implements GamblingGameInterface {
         }
         totalOfDealerHand = 0;
         displayDealerHand();
-        System.out.println("\u001B[0m************************************");
+        System.out.println("\u001B[36m************************************");
 //        System.out.println("Dealer Hand's FINAL total: " + totalOfDealerHand);
 
         //if dealerTotal is <= 16, dealer must hit.
@@ -184,7 +207,7 @@ public class BlackJackGame implements GamblingGameInterface {
         boolean initial = true;
         int userInput = 0;
         while (initial){
-            System.out.println("▀█████████▄   ▄█          ▄████████  ▄████████    ▄█   ▄█▄\n" +
+            System.out.println("\u001B[36m▀█████████▄   ▄█          ▄████████  ▄████████    ▄█   ▄█▄\n" +
                     "  ███    ███ ███         ███    ███ ███    ███   ███ ▄███▀\n" +
                     "  ███    ███ ███         ███    ███ ███    █▀    ███▐██▀  \n" +
                     " ▄███▄▄▄██▀  ███         ███    ███ ███         ▄█████▀   \n" +
@@ -203,9 +226,10 @@ public class BlackJackGame implements GamblingGameInterface {
                     "█▄ ▄███   ███    █▀  ████████▀    ███   ▀█▀               \n" +
                     "▀▀▀▀▀▀                            ▀                       ");
             System.out.println("************************************");
-            System.out.println("HELLO " + casinoAccountManager.getAccount(userName, password).getAccountName());
+            System.out.println("Hello, " + myPlayerAccount.getAccountName() + "!");
             System.out.println("\u001B[32mPlease place your bet: (Min: $5 / Max $50)");
-            System.out.println("\u001B[0m************************************");
+            System.out.println("Your Current Balance: " + myPlayerAccount.getAccountBalance());
+            System.out.println("\u001B[36m************************************");
             userInput = scanner.nextInt();
 
             if (userInput < 5){
@@ -216,7 +240,9 @@ public class BlackJackGame implements GamblingGameInterface {
                 initial = false;
             }}
         System.out.println("Dealer matches your bet.");
-        System.out.println("Total Pot: " + (userInput * 2));
+        myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() - userInput);
+        totalPot = userInput * 2;
+        System.out.println("Total Pot: " + totalPot);
     }
 
     public void playerTurn(){
@@ -247,7 +273,7 @@ public class BlackJackGame implements GamblingGameInterface {
         if (userInput2 == 1){
             playAgain();
         } else if (userInput2 == 2) {
-            System.out.println("Goodbye.");
+            System.out.println("Goodbye, " + myPlayerAccount.getAccountName() + ". Come back anytime.");
         } else {
             System.out.println("Not an option.");
         }
