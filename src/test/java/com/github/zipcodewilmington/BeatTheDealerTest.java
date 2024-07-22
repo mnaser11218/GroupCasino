@@ -31,6 +31,55 @@ public class BeatTheDealerTest {
         Assert.assertTrue(beatDealer.checkIf12Hits(dealerDiceValue));
     }
 
+    @Test
+    public void checkIfTied(){
+        int dealerDiceValue = 10;
+        int playerDiceValue = 10;
+        Assert.assertTrue(beatDealer.checkIfTied());
+    }
+
+    @Test
+    public void playerDiceRollTest(){
+    // tests that the dice was rolled, returning 2 or higher score for
+    // rolling two dice.
+        Assert.assertTrue(beatDealer.playerDiceRoll() > 2);
+    }
+
+    @Test
+    public void playerWonTest1(){
+        int playerDiceValue = 10;
+        int dealerDiceValue = 9;
+
+        Assert.assertTrue(beatDealer.playerWon(playerDiceValue,dealerDiceValue));
+    }
+
+    @Test
+    public void playerWonTest2(){
+        int playerDiceValue = 10;
+        int dealerDiceValue = 10;
+
+        Assert.assertFalse(beatDealer.playerWon(playerDiceValue,dealerDiceValue));
+    }
+
+    @Test
+    public void playerWonTest3(){
+        int playerDiceValue = 1;
+        int dealerDiceValue = 9;
+
+        Assert.assertFalse(beatDealer.playerWon(playerDiceValue,dealerDiceValue));
+    }
+
+
+    @Test
+    public void addUserNameAndPasswordTest(){
+        String userName = "NotDealer";
+        String password = "29";
+        beatDealer.addUserNameAndPassword(userName, password);
+        String actual = beatDealer.userName;
+        Assert.assertEquals(userName, actual);
+    }
+
+
 
 
 }
