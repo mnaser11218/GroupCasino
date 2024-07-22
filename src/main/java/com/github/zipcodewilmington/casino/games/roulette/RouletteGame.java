@@ -12,62 +12,18 @@ import java.util.Scanner;
 
 public class RouletteGame implements GamblingGameInterface {
 
+
     private CasinoAccount myPlayerAccount;
     public String userName;
     public String password;
     public CasinoAccountManager casinoAccountManager;
     public RoulettePlayer player;
-
     public int storedSpinResult;
 
-//    public String askForBetType() {
-//        //this will take in what RoulettePlayer will input
-//        // for example "1" or "RED" or "1st12"
-//        //is done via overriden methods
-////        String userInputUpper = userInput.toUpperCase();
-//    }
 
     public static void main(String[] args) {
-//        //   red   [31m
-//        //   auto   [0m
-//        int keepGoing = 0;
-//        while (keepGoing == 0) {
-//            System.out.println(
-//                    "     _____________________________________________________________________\t\n" +
-//                            "    /|    |    |    |    |    |    |    |    |    |    |    |     |      |  \n" +
-//                            "   / | \u001B[31m3\u001B[0m  |  6 |  \u001B[31m9\u001B[0m | \u001B[31m12\u001B[0m | 15 | \u001B[31m18\u001B[0m | \u001B[31m21\u001B[0m | 24 | \u001B[31m27\u001B[0m | \u001B[31m30\u001B[0m | 33 |  \u001B[31m36\u001B[0m | 2to1 |\n" +
-//                            "  /  |____|____|____|____|____|____|____|____|____|____|____|____ |______|\n" +
-//                            " /   |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
-//                            "| 0  |  2 |  \u001B[31m5\u001B[0m |  8 | 11 | \u001B[31m14\u001B[0m | 17 | 20 | \u001B[31m23\u001B[0m | 26 | 29 | \u001B[31m32\u001B[0m | 35  | 2to1 |\n" +
-//                            " \\   |____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
-//                            "  \\  |    |    |    |    |    |    |    |    |    |    |    |     |      |\n" +
-//                            "   \\ |  \u001B[31m1\u001B[0m |  4 |  \u001B[31m7\u001B[0m | 10 | 13 | \u001B[31m16\u001B[0m | \u001B[31m19\u001B[0m | 22 | \u001B[31m25\u001B[0m | 28 | 31 |  \u001B[31m34\u001B[0m | 2to1 |\n" +
-//                            "    \\|____|____|____|____|____|____|____|____|____|____|____|_____|______|\n" +
-//                            "     |                   |                   |                    |\n" +
-//                            "     |      1st 12       |       2nd 12      |      3rd  12       |\n" +
-//                            "     |___________________|___________________|____________________|\n" +
-//                            "     |              |              |              |               |\n" +
-//                            "     |    EVEN      |     \u001B[31mRED\u001B[0m      |     WHITE    |       ODD     |\n" +
-//                            "     |______________|______________|______________|_______________|\n" +
-//                            "        ---------Welcome to Roulette! Place your wager---------");
-//            Random rouletteSpin = new Random();
-//            RouletteGame roulette = new RouletteGame();
-//            int playerBet = roulette.askForWager(0);
-//            System.out.println("" + "Which bet type do you feel is luckiest? \n" +
-//                    "ANY NUMBER || 1ST12 || 2ND12 || 3RD12 || WHITE || RED || ODD || EVEN");
-//            String betType = roulette.askForBetType().toUpperCase();
-//            roulette.storedSpinResult = rouletteSpin.nextInt(36)+1;
-//            int payout =+ roulette.determinePayOutAmount(playerBet,betType);
-//            if (payout == 0){
-//                System.out.println("the winning number was " + roulette.storedSpinResult + ", lol you lost");
-//            } else if (payout > 0){
-//                System.out.println("wow you actually got it, the winning number was " + roulette.storedSpinResult + "\n" +
-//                        "your payout is $" + payout);
-//            }
-//            if (roulette.playAgain() == false) {
-//                keepGoing = -1;
-//            }
-//        }
+        RouletteGame roulette = new RouletteGame();
+        roulette.runRoulette();
     }
 
     public void runRoulette(){
@@ -76,7 +32,7 @@ public class RouletteGame implements GamblingGameInterface {
         int keepGoing = 0;
         while (keepGoing == 0) {
             System.out.println(
-                    "     _____________________________________________________________________\t\n" +
+                    "\u001B[0m     _____________________________________________________________________\t\n" +
                             "    /|    |    |    |    |    |    |    |    |    |    |    |     |      |  \n" +
                             "   / | \u001B[31m3\u001B[0m  |  6 |  \u001B[31m9\u001B[0m | \u001B[31m12\u001B[0m | 15 | \u001B[31m18\u001B[0m | \u001B[31m21\u001B[0m | 24 | \u001B[31m27\u001B[0m | \u001B[31m30\u001B[0m | 33 |  \u001B[31m36\u001B[0m | 2to1 |\n" +
                             "  /  |____|____|____|____|____|____|____|____|____|____|____|____ |______|\n" +
@@ -94,20 +50,23 @@ public class RouletteGame implements GamblingGameInterface {
                             "     |______________|______________|______________|_______________|\n" +
                             "        ---------Welcome to Roulette! Place your wager---------");
             Random rouletteSpin = new Random();
-            RouletteGame roulette = new RouletteGame();
-            int playerBet = roulette.askForWager(0);
+            int playerBet = this.askForWager(0);
             System.out.println("" + "Which bet type do you feel is luckiest? \n" +
                     "ANY NUMBER || 1ST12 || 2ND12 || 3RD12 || WHITE || RED || ODD || EVEN");
-            String betType = roulette.askForBetType().toUpperCase();
-            roulette.storedSpinResult = rouletteSpin.nextInt(36)+1;
-            int payout =+ roulette.determinePayOutAmount(playerBet,betType);
+            String betType = this.askForBetType().toUpperCase();
+            this.storedSpinResult = rouletteSpin.nextInt(36)+1;
+            int payout =+ this.determinePayOutAmount(playerBet,betType);
             if (payout == 0){
-                System.out.println("the winning number was " + roulette.storedSpinResult + ", lol you lost");
+                System.out.println("the winning number was " + this.storedSpinResult + ", lol you lost");
+                myPlayerAccount.setAccountBalance(myPlayerAccount.accountBalance - playerBet);
+                System.out.println("your current balance is " + myPlayerAccount.getAccountBalance());
             } else if (payout > 0){
-                System.out.println("wow you actually got it, the winning number was " + roulette.storedSpinResult + "\n" +
+                System.out.println("wow you actually got it, the winning number was " + this.storedSpinResult + "\n" +
                         "your payout is $" + payout);
+                myPlayerAccount.setAccountBalance(myPlayerAccount.accountBalance + payout);
+                System.out.println("your current balance is $" + myPlayerAccount.getAccountBalance());
             }
-            if (roulette.playAgain() == false) {
+            if (this.playAgain() == false) {
                 keepGoing = -1;
             }
         }
@@ -218,11 +177,6 @@ public class RouletteGame implements GamblingGameInterface {
         return betType;
     }
 
-    public void random(){
-        Random rouletteSpin = new Random();
-        storedSpinResult = rouletteSpin.nextInt(37)+1;
-    }
-
     public boolean playAgain(){
         System.out.println("\nwould you like to play again, Y/N?");
         Scanner scanner = new Scanner(System.in);
@@ -244,7 +198,9 @@ public class RouletteGame implements GamblingGameInterface {
 
     @Override
     public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
+
         this.casinoAccountManager=casinoAccountManager;
+         myPlayerAccount = this.casinoAccountManager.getAccount(this.userName,this.password);
     }
 
     @Override
@@ -262,9 +218,9 @@ public class RouletteGame implements GamblingGameInterface {
 
     @Override
     public void run() {
+        this.myPlayerAccount.getAccountBalance();
         System.out.println(this.userName);
-        CasinoAccount casinoAccount = this.casinoAccountManager.getAccount(this.userName,this.password);
-        System.out.println("Username is: "+casinoAccount.getAccountName() + "password: " + casinoAccount.getPassword() + "your balance is " +casinoAccount.accountBalance);
+        System.out.println("Hey there " + myPlayerAccount.getAccountName()+ ", your balance is $" +myPlayerAccount.accountBalance + "make it count!");
         runRoulette();
     }
 
