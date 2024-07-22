@@ -76,9 +76,9 @@ public class Casino implements Runnable {
                 String accountPassword = console.getStringInput("Enter your account password:");
                 CasinoAccount newAccount = casinoAccountManager.createAccount(accountName, accountPassword);
                 casinoAccountManager.registerAccount(newAccount);
-                Integer amountToAdd = console.getIntegerInput("Please add money to your balance:  \n How much would you like to add?");
+                Integer amountToAdd = console.getIntegerInput("Please add money to play...\nHow much would you like to deposit?");
                 casinoAccountManager.getAccount(accountName, accountPassword).setAccountBalance(amountToAdd);
-                System.out.println("Your new balance is: " + casinoAccountManager.getAccount(accountName, accountPassword).getAccountBalance() + " \n Have fun wasting your money!");
+                System.out.println("Your new balance is: " + casinoAccountManager.getAccount(accountName, accountPassword).getAccountBalance() + "\nWelcome to the casino, " + accountName + "!" + "\nHave fun wasting your money!");
                // System.out.println("inside get account : " + casinoAccountManager.getAccount(accountName, accountPassword).getAccountName());
             }
         } while (!"logout".equals(arcadeDashBoardInput));
