@@ -24,6 +24,8 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
     public String userName;
     public String password;
     public CasinoAccountManager casinoAccountManager;
+    public CasinoAccount secondPlayer;
+    public ArrayList<CasinoAccount> arcadeAccountList;
 
     public void addUserNameAndPassword(String userName, String password){
         this.userName = userName;
@@ -32,6 +34,7 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
     public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager){
         this.casinoAccountManager = casinoAccountManager;
         this.myPlayerAccount = this.casinoAccountManager.getAccount(this.userName, this.password);
+        arcadeAccountList = (ArrayList<CasinoAccount>) casinoAccountManager.getArcadeAccountList();
     }
     public NumberGuessGame() {
     }
@@ -101,6 +104,17 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
 
 
     public void run(){
+
+         //implementing two players:
+                System.out.println("Please choose a second player: ");
+                for(CasinoAccount c:  arcadeAccountList){
+                 if(!c.getAccountName().equals(userName)) {
+                     System.out.println("player name -> " + c.getAccountName() + " \nBalance amount: " + c.getAccountBalance());
+                 }
+        }
+
+        System.out.println("Welcome, your balance is : " + myPlayerAccount.getAccountBalance());
+
         System.out.println("\u001B[33m ███▄    █  █    ██  ███▄ ▄███▓ ▄▄▄▄   ▓█████  ██▀███  \n" +
                 " ██ ▀█   █  ██  ▓██▒▓██▒▀█▀ ██▒▓█████▄ ▓█   ▀ ▓██ ▒ ██▒\n" +
                 "▓██  ▀█ ██▒▓██  ▒██░▓██    ▓██░▒██▒ ▄██▒███   ▓██ ░▄█ ▒\n" +
@@ -121,6 +135,7 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
                 "░ ░   ░  ░░░ ░ ░    ░   ░  ░  ░  ░  ░  ░               \n" +
                 "      ░    ░        ░  ░      ░        ░               ");
 //        System.out.println("Welcome, your balance is : " + myPlayerAccount.getAccountBalance());
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select a number between 0 to 100");
         generateRandomNumber();
