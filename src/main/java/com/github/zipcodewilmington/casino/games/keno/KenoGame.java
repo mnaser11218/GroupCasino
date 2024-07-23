@@ -1,5 +1,6 @@
 package com.github.zipcodewilmington.casino.games.keno;
 
+import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GamblingGameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
@@ -14,6 +15,8 @@ public class KenoGame implements GamblingGameInterface {
     public String password;
     public CasinoAccountManager casinoAccountManager;
     public KenoPlayer player;
+    private CasinoAccount myPlayer;
+    public int pay;
 
     // this is going to display a little welcome note in the beginning of the opening for the user
     public void displayWelcomeMessage() {
@@ -123,6 +126,8 @@ public class KenoGame implements GamblingGameInterface {
 
 
         // calculate payout based on numbers matched and amount bet
+        pay = (int) (payOuts [numbersMatched] * amount);
+        System.out.println(pay);
         return payOuts [numbersMatched] * amount;
     }
 
@@ -188,6 +193,7 @@ public class KenoGame implements GamblingGameInterface {
     @Override
     public void addCasinoAccountManager(CasinoAccountManager casinoAccountManager) {
         this.casinoAccountManager = casinoAccountManager;
+        myPlayer = this.casinoAccountManager.getAccount(this.userName, this.password);
     }
 
     @Override
@@ -227,7 +233,10 @@ public class KenoGame implements GamblingGameInterface {
 
             int betAmount = 10;
             double payout = kenoGame.getCalculatePayOut(matches, betAmount);
+            pay = (int) payout;
+            myPlayer.setAccountBalance(myPlayer.getAccountBalance() + pay);
             System.out.println("Payout: $" + payout);
+            System.out.println("Your new current balance is " + myPlayer.getAccountBalance() );
 
 
             if (kenoGame.displayEnding(1) == 2) {
