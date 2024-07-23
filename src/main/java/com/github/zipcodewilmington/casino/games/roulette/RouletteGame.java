@@ -4,9 +4,7 @@ import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GamblingGameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
-import com.github.zipcodewilmington.utils.AnsiColor;
 
-import java.awt.*;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -51,20 +49,27 @@ public class RouletteGame implements GamblingGameInterface {
                             "        ---------Welcome to Roulette! Place your wager---------");
             Random rouletteSpin = new Random();
             int playerBet = this.askForWager(0);
+            if (playerBet == 0){
+                break;
+            }
             System.out.println("" + "Which bet type do you feel is luckiest? \n" +
                     "ANY NUMBER || 1ST12 || 2ND12 || 3RD12 || WHITE || RED || ODD || EVEN");
             String betType = this.askForBetType().toUpperCase();
             this.storedSpinResult = rouletteSpin.nextInt(36)+1;
             int payout =+ this.determinePayOutAmount(playerBet,betType);
             if (payout == 0){
-                System.out.println("the winning number was " + this.storedSpinResult + ", lol you lost");
+                System.out.println("the winning number was " + this.storedSpinResult + ", \u001B[31mlol you lost\u001B[0m");
                 myPlayerAccount.setAccountBalance(myPlayerAccount.accountBalance - playerBet);
                 System.out.println("your current balance is " + myPlayerAccount.getAccountBalance());
             } else if (payout > 0){
-                System.out.println("wow you actually got it, the winning number was " + this.storedSpinResult + "\n" +
+                System.out.println("\u001B[32mwow you actually got it\u001B[0m, the winning number was " + this.storedSpinResult + "\n" +
                         "your payout is $" + payout);
                 myPlayerAccount.setAccountBalance(myPlayerAccount.accountBalance + payout);
                 System.out.println("your current balance is $" + myPlayerAccount.getAccountBalance());
+                if (myPlayerAccount.accountBalance < 1){
+                    System.out.println("you ran out of money, security is coming to kick you out");
+                    keepGoing = -1;
+                }
             }
             if (this.playAgain() == false) {
                 keepGoing = -1;
@@ -229,6 +234,10 @@ public class RouletteGame implements GamblingGameInterface {
         Scanner scanner = new Scanner(System.in);
         try {
             playerBet = scanner.nextInt();
+            if (playerBet > myPlayerAccount.getAccountBalance() || (myPlayerAccount.getAccountBalance() - playerBet) < 0 || playerBet < 0){
+                System.out.println("You currently only have $" + myPlayerAccount.getAccountBalance() + " to bet with, try again!");
+                return askForWager(playerBet);
+            }
             return playerBet;
         }catch(Exception e){
             System.out.println("Your wager in numbers please");
