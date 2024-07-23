@@ -69,8 +69,8 @@ public class SlotsGame implements GamblingGameInterface {
         }
         this.randomList = newArray;
 
-        System.out.println("\u001B[35m┏---------┬---------┬---------┬---------┬---------┓  (  )");
-        System.out.println("|         |         |         |         |         |  //");
+        System.out.println("\u001B[35m┏---------┬---------┬---------┬---------┬---------┓");
+        System.out.println("|         |         |         |         |         | (  )");
         System.out.println("|    \u001B[36m" + newArray.get(0) +
                 "\u001B[35m    |    \u001B[36m"  + newArray.get(1) +
                 "\u001B[35m    |    \u001B[36m"  + newArray.get(2) +
