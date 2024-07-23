@@ -36,7 +36,7 @@ public class Casino implements Runnable {
         this.casinoAccountManager123 = casinoAccountManager;
         do {
             arcadeDashBoardInput = getArcadeDashboardInput();
-            if ("select-game".equals(arcadeDashBoardInput)) {
+            if ("sg".equals(arcadeDashBoardInput)) {
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
                 CasinoAccount casinoAccount = casinoAccountManager.getAccount(accountName, accountPassword);
@@ -68,9 +68,9 @@ public class Casino implements Runnable {
                    String errorMessage = "\u001B[31mNo account found with name of [ %s ] and password of [ %s ]\u001B[0m";
 //                    throw new RuntimeException(String.format(errorMessage, accountPassword, accountName));
                    // continue;
-                    System.out.printf((errorMessage) + "%n", accountPassword, accountName);
+                    System.out.printf((errorMessage) + "%n",accountName,accountPassword);
                 }
-            } else if ("create-account".equals(arcadeDashBoardInput)) {
+            } else if ("ca".equals(arcadeDashBoardInput)) {
                 console.println("Welcome to the account-creation screen.");
                 String accountName = console.getStringInput("Enter your account name:");
                 String accountPassword = console.getStringInput("Enter your account password:");
@@ -107,7 +107,7 @@ public class Casino implements Runnable {
         return console.getStringInput(new StringBuilder()
                 .append("\nWelcome to the Arcade Dashboard!")
                 .append("\nFrom here, you can select any of the following options:")
-                .append("\n\t[ create-account ], [ select-game ]")
+                .append("\n\t type CA :[ create-account ], type SG :[ select-game ]")
                 .toString());
     }
 

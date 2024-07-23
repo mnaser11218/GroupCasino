@@ -90,51 +90,51 @@ public class BlackJackGame implements GamblingGameInterface {
         int playerResult = 21 - totalOfPlayerHand;
 
         if (playerResult == 0) {
-            System.out.println("YOU HAVE BLACKJACK!!!!!!!!!");
+            System.out.println("\u001B[32mYOU HAVE BLACKJACK!!!!!!!!!\u001B[36m");
             myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + totalPot);
             displayUpdatedBalance();
             return; // End the method if player has blackjack
         } else if (dealerResult == 0) {
-            System.out.println("DEALER HAS BLACKJACK! YOU LOST!!!");
+            System.out.println("\u001B[31mDEALER HAS BLACKJACK! YOU LOST!!!\u001B[36m");
 //            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() - (totalPot / 2));
             displayUpdatedBalance();
             return; // End the method if dealer has blackjack
         }
 
         if (totalOfPlayerHand > 21) {
-            System.out.println("The dealer wins... YOU LOSE.");
+            System.out.println("\u001B[31mThe dealer wins...YOU LOSE.\u001B[36m");
 //            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() - (totalPot / 2));
             displayUpdatedBalance();
             return; // End the method if player busts
         } else if (totalOfDealerHand > 21) {
-            System.out.println("You win the pot!!! Money, baby!");
+            System.out.println("\u001B[32mYou win the pot!!! Money, baby!\u001B[36m");
             myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + totalPot);
             displayUpdatedBalance();
             return; // End the method if dealer busts
         }
 
         if (playerResult == dealerResult) {
-            System.out.println("It's a push.");
+            System.out.println("\u001B[33mIt's a push.\u001B[36m");
             myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + (totalPot / 2));
             displayUpdatedBalance();
             return; // End the method if it's a tie
         }
 
         if (dealerResult < playerResult) {
-            System.out.println("The dealer wins... YOU LOSE.");
+            System.out.println("\u001B[31mThe dealer wins... YOU LOSE.\u001B[36m");
 //            myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() - (totalPot / 2));
             displayUpdatedBalance();
         } else if (playerResult < dealerResult) {
-            System.out.println("You win the pot!!! Money, baby!");
+            System.out.println("\u001B[32mYou win the pot!!! Money, baby!\u001B[36m");
             myPlayerAccount.setAccountBalance(myPlayerAccount.getAccountBalance() + totalPot);
             displayUpdatedBalance();
         }
     }
 
     public void displayUpdatedBalance(){
-        System.out.println(">>> $$$$$$$$$$ <<<");
+        System.out.println("---------------------------------");
         System.out.println("Your Current Balance is now " + myPlayerAccount.getAccountBalance() + ".");
-        System.out.println(">>> $$$$$$$$$$ <<<");
+        System.out.println("---------------------------------");
     }
 
     @Override
@@ -206,7 +206,7 @@ public class BlackJackGame implements GamblingGameInterface {
     public void displayBeginning(){
         boolean initial = true;
         int userInput = 0;
-        while (initial){
+        while (initial) {
             System.out.println("\u001B[36m▀█████████▄   ▄█          ▄████████  ▄████████    ▄█   ▄█▄\n" +
                     "  ███    ███ ███         ███    ███ ███    ███   ███ ▄███▀\n" +
                     "  ███    ███ ███         ███    ███ ███    █▀    ███▐██▀  \n" +
@@ -231,11 +231,12 @@ public class BlackJackGame implements GamblingGameInterface {
             System.out.println("Your Current Balance: " + myPlayerAccount.getAccountBalance());
             System.out.println("\u001B[36m************************************");
             userInput = scanner.nextInt();
-
-            if (userInput < 5){
-                System.out.println("Sorry buddy, you need at least $5.");
-            } else if (userInput > 50){
-                System.out.println("The maximum bet is $50, can't you read?");
+            if (userInput < 5) {
+                System.out.println("\u001B[31mSorry buddy, you need at least $5.\u001B[36m");
+            } else if (userInput > 50) {
+                System.out.println("\u001B[31mThe maximum bet is $50, can't you read?\u001B[36m");
+            } else if ((myPlayerAccount.getAccountBalance() == 0) || myPlayerAccount.getAccountBalance() < userInput) {
+                System.out.println("\u001B[31mYou do NOT have enough funds for this.\u001B[36m");
             } else {
                 initial = false;
             }}
