@@ -1,7 +1,6 @@
 package com.github.zipcodewilmington.casino.games.beatTheDealer;
 
 import com.github.zipcodewilmington.casino.*;
-import com.github.zipcodewilmington.casino.games.roulette.RoulettePlayer;
 
 import java.util.Scanner;
 
@@ -16,10 +15,6 @@ public class BeatTheDealer extends Dice implements GamblingGameInterface {
 
     public int dealerDiceValue;
     public int playerDiceValue;
-
-    public static void main(String[] args) {
-//
-    }
 
     public int playerDiceRoll() {
         Dice dice = new Dice();
@@ -84,6 +79,10 @@ public class BeatTheDealer extends Dice implements GamblingGameInterface {
         try {
             System.out.println("How much $ would you like to bet?");
             playerBet = scanner.nextInt();
+            if (playerBet > myPlayerAccount.getAccountBalance() || (myPlayerAccount.getAccountBalance() - playerBet) < 0 || playerBet < 0){
+                System.out.println("You currently only have " + myPlayerAccount.getAccountBalance() + " to bet with, try again!");
+                return askForWager(playerBet);
+            }
             this.playerBet = playerBet;
             return playerBet;
         } catch (Exception e) {
@@ -135,6 +134,9 @@ public class BeatTheDealer extends Dice implements GamblingGameInterface {
                     " \\/___/  \\'  '\\  /\n" +
                     "          \\'__'\\/\u001B[0m");
             askForWager(this.playerBet);
+            if (this.playerBet == 0){
+                break;
+            }
             playerDiceRoll();
             sumOfDealer();
 
