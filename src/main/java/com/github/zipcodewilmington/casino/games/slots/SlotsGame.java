@@ -66,11 +66,20 @@ public class SlotsGame implements GamblingGameInterface {
             for (int i = 0; i < size; i++){
                 newArray.add(random.nextInt(10));
             }
-            if (!newArray.isEmpty()) {
-                System.out.println(newArray);
-            }
         }
         this.randomList = newArray;
+
+        System.out.println("\u001B[35m┏---------┬---------┬---------┬---------┬---------┓  (  )");
+        System.out.println("|         |         |         |         |         |  //");
+        System.out.println("|    \u001B[36m" + newArray.get(0) +
+                "\u001B[35m    |    \u001B[36m"  + newArray.get(1) +
+                "\u001B[35m    |    \u001B[36m"  + newArray.get(2) +
+                "\u001B[35m    |    \u001B[36m"  + newArray.get(3) +
+                "\u001B[35m    |    \u001B[36m"  + newArray.get(4) +
+                "\u001B[35m    | //");
+        System.out.println("|         |         |         |         |         |//");
+        System.out.println("┗---------┴---------┴---------┴---------┴---------┛╯\u001B[0m");
+
         return newArray;
     }
 
@@ -93,9 +102,11 @@ public class SlotsGame implements GamblingGameInterface {
             }
         }
         if (maxCount < 5 && maxCount >=3){
-            System.out.println("You matched 3!");
+            System.out.println("\u001B[32mYou matched 3!\u001B[0m");
             return true;
         } else {
+            System.out.println("\u001B[31mYou lost your wager of " + this.wagerAmount +". Womp Womp.\u001B[0m");
+            System.out.println("Your new balance is: \u001B[32m" + userPlayer.getAccountBalance() + "\u001B[0m");
             return false;
         }
     }
@@ -117,7 +128,7 @@ public class SlotsGame implements GamblingGameInterface {
         }
 
         if (maxCount == 5){
-            System.out.println("You matched 5!");
+            System.out.println("\u001B[32mYou matched 5!\u001B[0m");
             return true;
         } else {
             return false;
@@ -130,7 +141,7 @@ public class SlotsGame implements GamblingGameInterface {
                 return false;
             }
         }
-        System.out.println("JACKPOT");
+        System.out.println("\u001B[32mJACKPOT\u001B[0m");
         return true;
     }
 
@@ -138,7 +149,8 @@ public class SlotsGame implements GamblingGameInterface {
         payOutThree = 15;
         int payout = payOutThree * wagerAmount;
         userPlayer.setAccountBalance(userPlayer.getAccountBalance() + payout);
-        System.out.println("You got paid: " + payout + "\nYour new balance is: " + userPlayer.getAccountBalance());
+        System.out.println("\u001B[32mYou got paid: " + payout + "\nYour new balance is: \u001B[32m"
+                + userPlayer.getAccountBalance() + "\u001B[0m");
         return payout;
     }
 
@@ -146,7 +158,8 @@ public class SlotsGame implements GamblingGameInterface {
         payOutFive = 100;
         int payout = payOutFive * wagerAmount;
         userPlayer.setAccountBalance(userPlayer.getAccountBalance() + payout);
-        System.out.println("You got paid: " + payout + "\nYour new balance is: " + userPlayer.getAccountBalance());
+        System.out.println("\u001B[32mYou got paid: " + payout + "\nYour new balance is: \u001B[32m"
+                + userPlayer.getAccountBalance() + "\u001B[0m");
         return payout;
     }
 
@@ -154,7 +167,8 @@ public class SlotsGame implements GamblingGameInterface {
         payOutJackpot = 1000;
         int payout = payOutJackpot * wagerAmount;
         userPlayer.setAccountBalance(userPlayer.getAccountBalance() + payout);
-        System.out.println("You got paid: " + payout + "\nYour new balance is: " + userPlayer.getAccountBalance());
+        System.out.println("\u001B[32mYou got paid: " + payout + "\nYour new balance is: \u001B[32m"
+                + userPlayer.getAccountBalance() + "\u001B[0m");
         return payout;
     }
 
@@ -163,7 +177,7 @@ public class SlotsGame implements GamblingGameInterface {
     ===================================*/
 
     public void placeWager(int bet) {
-        System.out.print("How much would you like to bet? 0, 5, 10, 20, 50, 100, 250: ");
+        System.out.print("How much would you like to bet? Press '0' to stop gambling.\n[5, 10, 20, 50, 100, 250]: ");
         bet = 0;
         while (true) {
             bet = scanner.nextInt();
@@ -174,48 +188,36 @@ public class SlotsGame implements GamblingGameInterface {
                     return;
                 case 5:
                     this.wagerAmount = bet;
-                    System.out.println("You've bet: 5");
                     userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 5);
-                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 10:
                     this.wagerAmount = bet;
-                    System.out.println("You've bet: 10");
                     userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 10);
-                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 20:
                     this.wagerAmount = bet;
-                    System.out.println("You've bet: 20");
                     userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 20);
-                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 50:
                     this.wagerAmount = bet;
-                    System.out.println("You've bet: 50");
                     userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 50);
-                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 100:
                     this.wagerAmount = bet;
-                    System.out.println("You've bet: 100");
                     userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 100);
-                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 case 250:
                     this.wagerAmount = bet;
-                    System.out.println("You've bet: 250");
                     userPlayer.setAccountBalance(userPlayer.getAccountBalance() - 250);
-                    System.out.println("Your new balance is: " + userPlayer.getAccountBalance());
                     this.spinWheelYes(true, 5);
                     return;
                 default:
-                    System.out.println("That's not an option." +
+                    System.out.println("\u001B[31mThat's not an option.\u001B[0m" +
                             "\nHow much would you like to bet? 5, 10, 20, 50, 100, 250");
             }
         }
@@ -223,18 +225,18 @@ public class SlotsGame implements GamblingGameInterface {
 
     public boolean pullLever() {
         Scanner scanner1 = new Scanner(System.in);
-        System.out.println("Would you like to continue? [Yes] [No]");
+        System.out.println("Would you like to continue? \u001B[32m[Yes]\u001B[0m \u001B[31m[No]\u001B[0m");
         while (true) {
             String choice = scanner1.nextLine();
             switch (choice) {
                 case "yes":
-                    System.out.println("Your Current Balance is: " + userPlayer.getAccountBalance());
+                    System.out.println("Your Current Balance is: \u001B[32m" + userPlayer.getAccountBalance() + "\u001B[0m");
                     return true;
                 case "no":
                     System.out.println("Thank you for playing Slots. Come gamble again!\n\n");
                     return false;
                 default:
-                    System.out.println("That's not an option. Would you like to continue? [Yes] [No]");
+                    System.out.println("That's not an option. Would you like to continue? \u001B[32m[Yes]\u001B[0m \u001B[31m[No]\u001B[0m");
             }
         }
     }
@@ -247,7 +249,7 @@ public class SlotsGame implements GamblingGameInterface {
     @Override
     public void run() {
         int startGambling = 0;
-        System.out.println("Your Current Balance is: " + userPlayer.getAccountBalance());
+        System.out.println("\u001B[0mYour Current Balance is: \u001B[32m" + userPlayer.getAccountBalance() + "\u001B[0m");
 
         while (startGambling == 0) {
             placeWager(wagerAmount);
@@ -257,19 +259,17 @@ public class SlotsGame implements GamblingGameInterface {
             }
             if (checkForjackpot(randomList)){
                 payOutForJackpot(100, wagerAmount);
-                if (!this.randomList.isEmpty()) {
-                }
-                if (pullLever() == false) {
+                if (!pullLever()) {
                     startGambling = 1;
                 }
             } else if (checkForMatchFive(randomList)) {
                 payOutForFive(40, wagerAmount);
-                if (pullLever() == false) {
+                if (!pullLever()) {
                     startGambling = 1;
                 }
             } else if (checkForMatchThree(randomList)) {
                 payOutForThree(15, wagerAmount);
-                if (pullLever() == false) {
+                if (!pullLever()) {
                     startGambling = 1;
                 }
             }
