@@ -108,25 +108,25 @@ public class KenoGame implements GamblingGameInterface {
         return matches;
     }
 
-    public double getCalculatePayOut(int numbersMatched, int amount) {
+    public int getCalculatePayOut(int numbersMatched, int amount) {
         // this double array holds the payout rates based on the number of matches
-        double[] payOuts = {
+        int[] payOuts = {
                 0,      // 0 matches
-                2.5,    // 1 match
-                7,      // 2 matches
-                12,     // 3 matches
-                50,     // 4 matches
-                200,    // 5 matches
-                1500,   // 6 matches
-                5000,   // 7 matches
-                10000,  // 8 matches
-                20000,  // 9 matches
-                30000,  // 10 matches
+                1,    // 1 match
+                5,      // 2 matches
+                10,     // 3 matches
+                15,     // 4 matches
+                50,    // 5 matches
+                100,   // 6 matches
+                250,   // 7 matches
+                500,  // 8 matches
+                1000,  // 9 matches
+                5000,  // 10 matches
         };
 
 
         // calculate payout based on numbers matched and amount bet
-        pay = (int) (payOuts [numbersMatched] * amount);
+        pay = payOuts [numbersMatched] * amount;
         System.out.println(pay);
         return payOuts [numbersMatched] * amount;
     }
@@ -158,26 +158,30 @@ public class KenoGame implements GamblingGameInterface {
 
 
 
-    public double[] getPayoutRates() {
-        return new double[] {
+    public int[] getPayoutRates() {
+        return new int[] {
                 0,
-                2.5,    // 1 match
-                7,      // 2 matches
-                12,     // 3 matches
-                50,     // 4 matches
-                200,    // 5 matches
-                1500,   // 6 matches
-                5000,   // 7 matches
-                10000,  // 8 matches
-                20000,  // 9 matches
-                30000,  // 10 matches
+                1,    // 1 match
+                5,      // 2 matches
+                10,     // 3 matches
+                15,     // 4 matches
+                50,    // 5 matches
+                100,   // 6 matches
+                250,   // 7 matches
+                500,  // 8 matches
+                1000,  // 9 matches
+                5000,  // 10 matches
         };
     }
 
 
     @Override
     public int askForWager(int playerBet) {
-        return 0;
+        Scanner scanner = new Scanner(System.in);
+        int wager = 0;
+        System.out.println("Please enter your wager amount: ");
+        wager = Integer.parseInt(scanner.nextLine());
+        return wager;
     }
 
     @Override
@@ -231,9 +235,9 @@ public class KenoGame implements GamblingGameInterface {
             System.out.println("Number of Matches: " + matches);
 
 
-            int betAmount = 10;
-            double payout = kenoGame.getCalculatePayOut(matches, betAmount);
-            pay = (int) payout;
+            int betAmount = 1;
+            int payout = kenoGame.getCalculatePayOut(matches, betAmount);
+            pay = payout;
             myPlayer.setAccountBalance(myPlayer.getAccountBalance() + pay);
             System.out.println("Payout: $" + payout);
             System.out.println("Your new current balance is " + myPlayer.getAccountBalance() );
@@ -249,7 +253,3 @@ public class KenoGame implements GamblingGameInterface {
     }
 }
 
-/* The contains(Object element) of java.util.Collection interface is used to check whether the element ‘element’
-exists in this collection. This method returns a boolean value depicting the presence of the element.
-If the element is present, it returns true, else it returns false.
- */
