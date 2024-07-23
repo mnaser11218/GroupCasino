@@ -5,6 +5,8 @@ import com.github.zipcodewilmington.casino.CasinoAccount;
 import com.github.zipcodewilmington.casino.CasinoAccountManager;
 import com.github.zipcodewilmington.casino.GameInterface;
 import com.github.zipcodewilmington.casino.PlayerInterface;
+import com.github.zipcodewilmington.utils.AnsiColor;
+import com.github.zipcodewilmington.utils.IOConsole;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
     public CasinoAccountManager casinoAccountManager;
     public CasinoAccount secondPlayer;
     public ArrayList<CasinoAccount> arcadeAccountList;
+    private final IOConsole console = new IOConsole(AnsiColor.BLUE);
+
 
     public void addUserNameAndPassword(String userName, String password){
         this.userName = userName;
@@ -105,13 +109,9 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
 
     public void run(){
 
+
          //implementing two players:
-                System.out.println("Please choose a second player: ");
-                for(CasinoAccount c:  arcadeAccountList){
-                 if(!c.getAccountName().equals(userName)) {
-                     System.out.println("player name -> " + c.getAccountName() + " \nBalance amount: " + c.getAccountBalance());
-                 }
-        }
+
 
         System.out.println("Welcome, your balance is : " + myPlayerAccount.getAccountBalance());
 
@@ -135,6 +135,17 @@ public class NumberGuessGame extends CasinoAccountManager implements GameInterfa
                 "░ ░   ░  ░░░ ░ ░    ░   ░  ░  ░  ░  ░  ░               \n" +
                 "      ░    ░        ░  ░      ░        ░               ");
 //        System.out.println("Welcome, your balance is : " + myPlayerAccount.getAccountBalance());
+// TODO FINISIH TWO PLAYER GAME:
+//        int userInput = console.getIntegerInput("Click 1 for one player, or 2 for two players.");
+//        if(userInput == 2){
+//            for(CasinoAccount c:  arcadeAccountList){
+//                if(!c.getAccountName().equals(userName)) {
+//                    System.out.println("player name -> " + c.getAccountName() + " \nBalance amount: " + c.getAccountBalance());
+//                }
+//            }
+//            String userInputString = console.getStringInput("Please select user name for second player: ");
+//         // secondPlayer= arcadeAccountList.get(userInputString)
+//        }
 
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select a number between 0 to 100");
