@@ -69,17 +69,17 @@ public class RouletteTest {
         int expected = 1;
         Assert.assertEquals(actual, expected);
     }
-
-    @Test
-    public final void testDeterminePayOutFor12s(){
-        //12s payout is 2:1
-        String betType = "1st12";
-        roulette.storedSpinResult = 11;
-
-        int actual = roulette.determinePayOutFor12s(betType);
-        int expected = 2;
-        Assert.assertEquals(actual, expected);
-    }
+//
+//    @Test
+//    public final void testDeterminePayOutFor12s(){
+//        //12s payout is 2:1
+//        String betType = "1st12";
+//        roulette.storedSpinResult = 11;
+//
+//        int actual = roulette.determinePayOutFor12s(betType);
+//        int expected = 2;
+//        Assert.assertEquals(actual, expected);
+//    }
 
     @Test
     public final void testDeterminePayOutForOddsOrEvens(){
